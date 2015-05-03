@@ -29,7 +29,6 @@ Hotkeys(key) {
 			run % (InStr(type, "Google") ? "https://www.google.com/?q=" : "http://www.wolframalpha.com/input/?i=") UriEncode(text)
 			Gui.Hide()
 		} else {
-			Print("Run: " text)
 			if run(IniRead("items", text, "dir"))
 				Item.AddFreq(text)
 			Gui.Hide()

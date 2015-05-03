@@ -11,7 +11,8 @@ class Commands {
 				else if FileExist("commands\" cmd_file ".exe")
 					run(A_WorkingDir "\commands\" cmd_file ".exe", arg)
 			}
-		}
+		} if command.equals("reload|rel")
+			reload
 	}
 	
 	settings() {
@@ -34,10 +35,6 @@ class Commands {
 	
 	update() {
 		Update(true)
-	}
-	
-	reload() {
-		reload
 	}
 	
 	tips() {
