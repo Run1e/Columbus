@@ -14,7 +14,7 @@ Class Commands {
 		if (cmd = "listvars")
 			listvars
 		else if (cmd = "test") {
-			Plugin.Exit()
+			msgbox
 		}
 	}
 	

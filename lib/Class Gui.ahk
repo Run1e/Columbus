@@ -31,13 +31,13 @@ Class Gui {
 		Gui % this.hwnd ":Destroy"
 	}
 	
-	Options(opt, ext := "") {
-		Gui % this.hwnd ":" opt, % ext
+	Options(options, ext := "") {
+		Gui % this.hwnd ":" options, % ext
 	}
 	
-	Show(opt := "") {
+	Show(options := "") {
 		this.IsVisible := true
-		Gui % this.hwnd ":Show", % opt
+		Gui % this.hwnd ":Show", % options
 	}
 	
 	Hide() {
