@@ -1,4 +1,4 @@
-﻿MenuHandler(menu, item) {
+MenuHandler(menu, item) {
 	if (menu = "Tray") {
 		if (item = "Show Columbus")
 			Main.Toggle()

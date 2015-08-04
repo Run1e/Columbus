@@ -5,11 +5,11 @@ Fuzzy(input, arr){ ; magic happens here
 		return list
 	} t:=[]
 	for index, word in arr { ; loop the array word for word
-		dsa:=[], i:=0
+		m:=[], i:=0
 		for z, a in input.split() ; split in the input
 			for v, b in word.split()
-				if (a = b) && !dsa[a, v] { ; figure out how many matching letters we have
-					dsa[a, v] := true, i++
+				if (a = b) && !m[a, v] { ; figure out how many matching letters we have
+					m[a, v] := true, i++
 					continue 2
 				}
 		if (i = input.length) { ; all letters from input is in word

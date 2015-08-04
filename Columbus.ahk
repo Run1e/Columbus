@@ -184,8 +184,6 @@ for a, b in xml.get("//plugins/plugin")
 
 SetTimer, ScanTimer, % Settings.ScanTime * 1000 * 60
 
-dsa:=true
-
 return
 
 Convert() {

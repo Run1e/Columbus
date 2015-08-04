@@ -1,4 +1,4 @@
-﻿Class FokusGui extends Gui {
+Class FokusGui extends Gui {
 	Show(opt := "") {
 		this.IsVisible := true
 		Gui % this.hwnd ": Show", Hide

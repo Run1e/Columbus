@@ -62,6 +62,45 @@ Class MainGui extends Gui {
 		
 	}
 	
+	Move() {
+		if Plugin.Event("OnResize", false)
+			return
+		Hotkey.Disable(Settings.Hotkeys.Main)
+		Hotkey.Disable(Settings.Hotkeys.Fokus)
+		Hotkey.Disable("~Ctrl Up")
+		Hotkey.Bind("Escape", "stopmove", Main.hwnd)
+		Main.Control("Hide", "SysListView321")
+		Main.Control("Hide", "Edit1")
+		Main.Control("Show", "Static1")
+		if !WinActive(Main.ahkid)
+			Main.Show()
+		Main.Options("+Resize")
+		return
+		
+		stopmove:
+		Main.Options("-Resize")
+		WinGetPos, x, y, w, h, % Main.ahkid
+		Main.Control("Show", "SysListView321")
+		Main.Control("Show", "Edit1")
+		Main.Control("Hide", "Static1")
+		Main.Control("Focus", "Edit1")
+		if (x.length && y.length && w.length && h.length) {
+			if Settings.RowSnap
+				Main.RowSnap(1, y, h), Settings.Pos := {X:x, Width:w-2}
+			else
+				Settings.Pos := {X:x, Y:y, Width:w-2, Height:h-2}
+		} else ; failed :~)
+			Settings.Pos := Settings.default.Pos
+		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
+		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
+		Plugin.Event("OnResize", true)
+		Hotkey.Enable(Settings.Hotkeys.Main)
+		Hotkey.Enable(Settings.Hotkeys.Fokus)
+		Hotkey.Enable("~Ctrl Up")
+		Hotkey.Bind("Escape", "Hotkeys", Main.hwnd)
+		return
+	}
+	
 	FontSize(i) {
 		MouseGetPos,,,, control
 		if (control = "SysListView321") {
@@ -100,45 +139,6 @@ Class MainGui extends Gui {
 		SendMessage,% 0x1000+14,0, &rect,, % "ahk_id" lvhwnd
 		Settings.Rows := Round((Settings.Pos.Height-27)/(height := NumGet(rect,12,"uint")-NumGet(rect,4,"uint")))
 		return height
-	}
-	
-	Move() {
-		if Plugin.Event("OnResize", false)
-			return
-		Hotkey.Disable(Settings.Hotkeys.Main)
-		Hotkey.Disable(Settings.Hotkeys.Fokus)
-		Hotkey.Disable("~Ctrl Up")
-		Hotkey.Bind("Escape", "stopmove", Main.hwnd)
-		Main.Control("Hide", "SysListView321")
-		Main.Control("Hide", "Edit1")
-		Main.Control("Show", "Static1")
-		if !WinActive(Main.ahkid)
-			Main.Show()
-		Main.Options("+Resize")
-		return
-		
-		stopmove:
-		Main.Options("-Resize")
-		WinGetPos, x, y, w, h, % Main.ahkid
-		Main.Control("Show", "SysListView321")
-		Main.Control("Show", "Edit1")
-		Main.Control("Hide", "Static1")
-		Main.Control("Focus", "Edit1")
-		if (x.length && y.length && w.length && h.length) {
-			if Settings.RowSnap
-				Main.RowSnap(1, y, h), Settings.Pos := {X:x, Width:w-2}
-			else
-				Settings.Pos := {X:x, Y:y, Width:w-2, Height:h-2}
-		} else ; failed :~)
-			Settings.Pos := Settings.default.Pos
-		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
-		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
-		Plugin.Event("OnResize", true)
-		Hotkey.Enable(Settings.Hotkeys.Main)
-		Hotkey.Enable(Settings.Hotkeys.Fokus)
-		Hotkey.Enable("~Ctrl Up")
-		Hotkey.Bind("Escape", "Hotkeys", Main.hwnd)
-		return
 	}
 	
 	; size the listview item width, part of Main.Size()

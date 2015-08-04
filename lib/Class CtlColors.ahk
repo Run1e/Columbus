@@ -1,4 +1,4 @@
-﻿; created by 'just me' -> http://ahkscript.org/boards/viewtopic.php?t=2197
+; created by 'just me' -> http://ahkscript.org/boards/viewtopic.php?t=2197
 Class CtlColors {
 	Static Attached := {}
 	Static HandledMessages := {Edit: 0, ListBox: 0, Static: 0}
