@@ -7,7 +7,7 @@ Class Plugin {
 		RegWrite,REG_SZ,HKCU,Software\Classes\CLSID\%CLSID%,,Columbus
 		for a, b in xml.get("//plugins/plugin")
 			if !FileExist(A_WorkingDir "\Plugins\" b.name ".ahk") ; delete plugins if they've been removed
-				xml.Delete(a)
+				xml.Delete(b.node)
 		this.version := version
 		this.path := A_ScriptFullPath
 		this.directory := A_ProgramFiles "\Columbus"
@@ -17,6 +17,16 @@ Class Plugin {
 	; call the msgbox function
 	m(x*) {
 		m(x*)
+	}
+	
+	; connect a plugin
+	Connect(hwnd, obj) {
+		this.Connections[hwnd] := obj
+	}
+	
+	; disconnect a plugin
+	Disconnect(hwnd) {
+		this.Connections.Remove(hwnd)
 	}
 	
 	; create a new list, return the list object if the list already exists
@@ -118,13 +128,6 @@ Class Plugin {
 	
 	
 	; =========== methods below this comment should not be called by a plugin script!! they are used by columbus to manage connected plugins! ===========
-	Connect(hwnd, obj) {
-		this.Connections[hwnd] := obj
-	}
-	
-	Disconnect(hwnd) {
-		this.Connections.Remove(hwnd)
-	}
 	
 	Event(event, param*) {
 		for a, b in this.Connections {

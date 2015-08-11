@@ -53,7 +53,11 @@ class xmlfile {
 	get(path) {
 		temp := []
 		while aa:=(t?t:t:=this.sn(path)).item[A_Index-1], ea:=xmlfile.ea(aa)
-			temp[aa]:=ea
+		{
+			i++
+			ea.node := aa
+			temp[i]:=ea
+		}
 		return temp
 	}
 	
@@ -123,7 +127,7 @@ class xmlfile {
 		file:=fileopen(this.file,3,"UTF-8"),file.seek(0),file.write(this[]),file.length(file.position)
 	}
 	
-	; EasyAttribute - the easy way to get attributes™
+	; EasyAttribute - the easy way to get attributesâ„¢
 	ea(path){
 		temp:=[]
 		nodes:=path.nodename?path.SelectNodes("@*"):path.text?this.sn("//*[text()='" path.text "']/@*"):!IsObject(path)?this.sn(path "/@*"):""

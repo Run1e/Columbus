@@ -1,6 +1,6 @@
 Class Items extends ItemList {
 	static name_keywords := ["unin", "driver", "help", "update", "NVIDIA", "eReg", ".NET", "Microsoft Security Client", "Battlelog", "AutoHotkey " A_AhkVersion]
-		, dir_keywords := ["unin", "driver", "help", "update", "{", "["]
+	, dir_keywords := ["unin", "driver", "help", "update", "{", "["]
 	
 	; Pack all the .scan() calls into one function that is called from outside
 	Search() {
@@ -11,6 +11,7 @@ Class Items extends ItemList {
 		if Settings.Verify
 			this.Verify()
 		this.Refresh()
+		this.freqlist := true
 	}
 	
 	; detects chrome apps
@@ -48,7 +49,7 @@ Class Items extends ItemList {
 					FileLocation := this.search_directory(DisplayName, InstallLocation)
 				;FileLocation := RegExReplace(FileLocation, "\\\\", "\")
 				if DisplayName.length && FileLocation && DisplayIcon && !FileLocation.contains(this.dir_keywords) && !DisplayName.contains(this.name_keywords)
-					this.Add({name:DisplayName, run:FileLocation, icon:DisplayIcon, freq:0})
+					this.Add({name:DisplayName, run:FileLocation, icon:DisplayIcon, freq:0},,,, true)
 			}
 	}
 	
@@ -65,25 +66,25 @@ Class Items extends ItemList {
 		Loop % dir "\*.exe", 1, ; loop the dir to find all the exe files
 			if (short_exe := SubStr(A_LoopFileName, 1, InStr(A_LoopFileName, ".",, 0) - 1)).contains(this.name_keywords) { 		; check that it doesn't contain any excluded words
 				FileGetSize, size, % A_LoopFileFullPath, K 			; get filesize
-				if (size > max_size)			; get the size of the biggest size
-					max_size := size
-				i := 0, temp := name
-				Loop, parse, short_exe			; find the number of matching letters
-					if (pos := InStr(temp, A_LoopField)) {
-						temp := SubStr(temp, 1, pos - 1) . SubStr(temp, pos + 1)
-						i++			; i = number of letters matched
-					} arr[A_LoopFileName, "match"] := i / short_exe.length	; put the letter match ratio in the array
-				arr[A_LoopFileName, "size"] := size 					; put the filesize in the array
-			}
-		for a, b in arr 			; apply weight to the sizes
-			arr[a, "size"] := Round((b.size / max_size), 3)
-		rank := []	; create a new array to list all the possibilities
-		for a, b in arr
-			rank[a] := b.match + (b.size * size_weight)
-		for a, b in rank		; find the highest scoring exe
-			if (b > bm)
-				fin := a, bm := b
-		if fin			; if it exists, return it! :D
-			return dir "\" fin
+		if (size > max_size)			; get the size of the biggest size
+			max_size := size
+		i := 0, temp := name
+		Loop, parse, short_exe			; find the number of matching letters
+			if (pos := InStr(temp, A_LoopField)) {
+				temp := SubStr(temp, 1, pos - 1) . SubStr(temp, pos + 1)
+				i++			; i = number of letters matched
+			} arr[A_LoopFileName, "match"] := i / short_exe.length	; put the letter match ratio in the array
+		arr[A_LoopFileName, "size"] := size 					; put the filesize in the array
 	}
+	for a, b in arr 			; apply weight to the sizes
+		arr[a, "size"] := Round((b.size / max_size), 3)
+	rank := []	; create a new array to list all the possibilities
+	for a, b in arr
+		rank[a] := b.match + (b.size * size_weight)
+	for a, b in rank		; find the highest scoring exe
+		if (b > bm)
+			fin := a, bm := b
+	if fin			; if it exists, return it! :D
+		return dir "\" fin
+}
 }

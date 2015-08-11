@@ -45,7 +45,7 @@ FuzzyWrap(input, arr) {
 		LV_Add("Icon" . ItemList.Lists[Settings.List].Icon[b.name], b.name, ItemList.Lists[Settings.List].Freq[b.name])
 	if !LV_GetCount()
 		LV_Add("Icon1", "No results!")
-	if Settings.FreqSort && !input.length
+	if Settings.FreqSort && !input.length && ItemList.Lists[Settings.List].freqlist
 		LV_ModifyCol(2, "SortDesc")
 	LV_Modify(1, "Select")
 	Main.SizeCol()

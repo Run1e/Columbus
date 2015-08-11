@@ -188,6 +188,8 @@ Settings() {
 		ItemList.Lists[Settings.List].Refresh() ; refresh list
 		Main.SetText() ; refresh listview
 		Main.SizeList()
+		if Settings.RowSnap
+			Main.RowSnap(Settings.Pos.Height)
 	} 
 	
 	if (col != Settings.Color) {

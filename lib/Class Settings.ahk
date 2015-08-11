@@ -12,7 +12,7 @@ Class Settings {
 									, LastUpdatePrompt: 0
 									, List:				"items"
 									, Fade:				65
-									, Rows:				12
+									, Rows:				11
 									, RowSnap:			true
 									, LargeIcons:		true
 									, Font:				{Type:"Candara", Size:13, Bold:false}
@@ -41,12 +41,13 @@ Class Settings {
 		else if (key = "List")
 			ItemList.Lists[value].Refresh(), Main.SetText()
 		else if (key = "Prefix") {
-			if (value.length > 1) {
-				m("Prefix cannot be longer than 1 character.`n`nResetting Prefix to ""/""")
-				Settings.Prefix := "/"
-			}
+			if (value.length > 1)
+				m("Prefix cannot be longer than 1 character.`n`nResetting Prefix to ""/"""), Settings.Prefix := "/"
 		} else if (key = "Rows") {
-			
+			if value > 0
+				Main.SetRows(value)
+			else
+				m("Value invalid: " value)
 		}
 	}
 	

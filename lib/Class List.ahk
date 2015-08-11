@@ -7,10 +7,11 @@ Class ItemList {
 			xml.add("lists/" name)
 		this.Refresh()
 		ItemList.Lists[name] := this
+		this.freqlist := false
 	}
 	
 	; add a new item, it will be placed randomly in the list
-	Add(item, run := "", icon := "", hide := false) {
+	Add(item, run := "", icon := "", hide := false, rand_pos := false) {
 		if run.length
 			temp := item, item := {name:temp, run:run, icon:icon, freq:0, hide:hide}
 		if !xml.ssn("//lists/" this.name "/item[@name='" item.name "']") {
@@ -18,7 +19,11 @@ Class ItemList {
 				item.Remove("icon")
 			if (item.hide = 0)
 				item.Remove("hide")
-			return xml.move(xml.add("lists/" this.name "/item", item,, true), xml.sn("//lists/" this.name "/item").item[Random(1, xml.sn("//lists/" this.name "/item").length)])
+			node := xml.add("lists/" this.name "/item", item,, true)
+			if rand_pos
+				return xml.move(node, xml.sn("//lists/" this.name "/item").item[Random(1, xml.sn("//lists/" this.name "/item").length)])
+			else
+				return node
 		}
 	}
 	
@@ -35,7 +40,7 @@ Class ItemList {
 	}
 	
 	; hide item
-	Hide(item) {
+	Hide(item) { 
 		xml.ssn("//lists/" this.name "/item[@name='" item "']").SetAttribute("hide", true)
 	}
 	
@@ -52,7 +57,8 @@ Class ItemList {
 			if !b.hide { ; yes, I'm using three arrays to store the item information. ahk is borderline stupid and always sorts array indexes alphabetically.
 				this.List.Insert(b.name)
 				this.Icon[b.name] := IL_Add(this.ImageList, b.icon ? b.icon : b.run)
-				this.Freq[b.name] := b.freq
+				if this.freqlist
+					this.Freq[b.name] := b.freq
 			}
 	}
 }

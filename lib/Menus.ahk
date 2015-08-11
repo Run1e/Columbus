@@ -7,7 +7,7 @@ MenuHandler(menu, item) {
 		if (item = "Reset GUI position") {
 			Settings.Pos := Settings.default.Pos
 			if Settings.RowSnap
-				Main.RowSnap(2)
+				Main.RowSnap(Settings.Pos.Height)
 			Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
 		} else
 			
@@ -42,4 +42,3 @@ MenuHandler(menu, item) {
 MenuHandler:
 MenuHandler(A_ThisMenu, A_ThisMenuitem)
 return
-

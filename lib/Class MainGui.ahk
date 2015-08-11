@@ -85,19 +85,18 @@ Class MainGui extends Gui {
 		Main.Control("Hide", "Static1")
 		Main.Control("Focus", "Edit1")
 		if (x.length && y.length && w.length && h.length) {
+			Settings.Pos := {X:x, Y:y, Width:w-2, Height:h-2}
 			if Settings.RowSnap
-				Main.RowSnap(1, y, h), Settings.Pos := {X:x, Width:w-2}
-			else
-				Settings.Pos := {X:x, Y:y, Width:w-2, Height:h-2}
+				Main.RowSnap(h)
 		} else ; failed :~)
 			Settings.Pos := Settings.default.Pos
 		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
 		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
-		Plugin.Event("OnResize", true)
 		Hotkey.Enable(Settings.Hotkeys.Main)
 		Hotkey.Enable(Settings.Hotkeys.Fokus)
 		Hotkey.Enable("~Ctrl Up")
 		Hotkey.Bind("Escape", "Hotkeys", Main.hwnd)
+		Plugin.Event("OnResize", true)
 		return
 	}
 	
@@ -112,33 +111,27 @@ Class MainGui extends Gui {
 		}
 	}
 	
-	; function calculating the new window height if RowSnap is enabled
-	; mode 1 = don't add 2 pixels to y value and subtract 2 from height ; mode 2 = add 2 pixels to y value and subtract 2 from height
-	RowSnap(mode:=0, y:="", h:="") {
-		pixels := 27
-		y := y.length ? y : Settings.Pos.Y
-		h := h.length ? h : Settings.Pos.Height
-		rowheight := this.GetRowHeight()
-		h_old:=h
-		Settings.Rows := Round((h_old-pixels)/rowheight) ; rowcount=height-excess/rowheight
-		h := ((Settings.Rows*rowheight)+pixels) ; height := (rowcount*rowheight)+excess
-		y -= (h-h_old)
-		if (h.length && y.length)
-			Settings.Pos := {Y:y+(mode>1?2:0), Height:h-(mode?2:0)}
+	RowSnap(h := "") {
+		Settings.Rows := Round(((h ? h : Settings.Pos.Height) - 25) / this.GetRowHeight())
+		if (Settings.Rows < 1) {
+			m("An error occured, resetting gui position.")
+			Settings.Pos := Settings.default.Pos
+			Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
+		}
 	}
 	
 	SetRows(rows) {
-		ControlGet, lvhwnd, hwnd,, SysListView321, % this.ahkid
-		VarSetCapacity(rect,4*A_PtrSize)
-		SendMessage,% 0x1000+14,0, &rect,, % "ahk_id" lvhwnd
+		h := 25 + rows * this.GetRowHeight() ; excess + rows * rowheight
+		y := Settings.Pos.Y + Settings.Pos.Height - h
+		Settings.Pos := {Y:y, Height:h}
+		this.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
 	}
 	
 	GetRowHeight() {
 		ControlGet, lvhwnd, hwnd,, SysListView321, % this.ahkid
 		VarSetCapacity(rect,4*A_PtrSize)
 		SendMessage,% 0x1000+14,0, &rect,, % "ahk_id" lvhwnd
-		Settings.Rows := Round((Settings.Pos.Height-27)/(height := NumGet(rect,12,"uint")-NumGet(rect,4,"uint")))
-		return height
+		return NumGet(rect,12,"uint")-NumGet(rect,4,"uint")
 	}
 	
 	; size the listview item width, part of Main.Size()
@@ -158,7 +151,7 @@ Class MainGui extends Gui {
 	; runs after ctrl has been released
 	SizeList() {
 		if Settings.RowSnap
-			Main.RowSnap(2)
+			Main.RowSnap(Settings.Pos.Height)
 		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
 		Main.Pos(, Settings.Pos.Y,, Settings.Pos.Height)
 	}

@@ -1,20 +1,20 @@
 Class Commands {
 	static List := [  "manager - open the item manager"
-					, "settings - open the settings menu"
+	, "settings - open the settings menu"
 	; , "docs - search through the AHK documentation"
-					, "g/w - google/wolfram search"
-					, "move - drag and resize the window"
-					, "update - check for updates"
+	, "g/w - google/wolfram search"
+	, "move - drag and resize the window"
+	, "update - check for updates"
 	; , "specs - systeminfo (beta)"
-					, "about - about Columbus"
-					, "reset - reset everything"
-					, "exit - exit the program"]
+	, "about - about Columbus"
+	, "reset - reset everything"
+	, "exit - exit the program"]
 	
 	__Call(cmd) {
 		if (cmd = "listvars")
 			listvars
 		else if (cmd = "test") {
-			msgbox
+			Main.RowSnap(Settings.Pos.Height)
 		}
 	}
 	
@@ -44,6 +44,10 @@ Class Commands {
 			Settings[key] := value
 		else
 			return m("The key '" key "' doesn't appear to exist`nHere's a list of keys and their values:`n`n" Settings[])
+	}
+	
+	def(key) {
+		Settings[key] := Settings.default[key]
 	}
 	
 	pset() {

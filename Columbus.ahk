@@ -47,7 +47,7 @@ if !FileExist(A_WorkingDir "\Plugins")
 */
 
 ; init classes and vars
-global version, dsa
+global version
 ;auto_version
 global xml := New xmlfile("Columbus", A_WorkingDir "\Columbus.xml")
 global Settings := New Settings()
@@ -88,8 +88,8 @@ Menu, Tray, Add
 Menu, Tray, Tip, Columbus v%version%
 
 for a, b in xml.get("//lists/*")
-	if (a.nodeName != "items")
-		ItemList.Lists[a.nodeName] := New ItemList(a.nodeName)
+	if (b.node.nodeName != "items")
+		ItemList.Lists[b.node.nodeName] := New ItemList(b.node.nodeName)
 
 Loop % A_WorkingDir "\Plugins\*.ahk"
 {
@@ -149,7 +149,7 @@ EditAction()
 
 ; RowSnap at start in case user changed font.size
 if Settings.RowSnap
-	Main.RowSnap(2)
+	Main.RowSnap(Settings.Pos.Height)
 
 ; size gui
 Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
@@ -171,7 +171,6 @@ Hotkey.Bind("*MButton", "Hotkeys", Main.hwnd)
 Hotkey.Bind("^Backspace", "Hotkeys", Main.hwnd)
 Hotkey.Bind("+Up", "Hotkeys", Main.hwnd)
 Hotkey.Bind("+Down", "Hotkeys", Main.hwnd)
-
 
 if FileExist("old") {
 	FileDelete old
