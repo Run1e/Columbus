@@ -31,7 +31,7 @@ Class MainGui extends Gui {
 	
 	DropFiles(GuiEvent) {
 		
-		if Plugin.Event("OnDropFiles", false, GuiEvent) || (Settings.List != "items")
+		if Plugin.Event("OnDropFiles", false, GuiEvent)
 			return
 		
 		for a, file in GuiEvent.split("`n") {

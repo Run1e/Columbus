@@ -15,10 +15,13 @@ Fuzzy(input, arr){ ; magic happens here
 		if (i = input.length) { ; all letters from input is in word
 			outline := (split := word.split())[1]
 			for x, v in split
-				if (v = " ")
+				if v.equals(" ", ".")
 					outline .= split[A_Index+1]
+			for g, h in m, n := ""
+				if (h.MaxIndex() > n)
+					n := h.MaxIndex()
 			item := { name:word
-					, score:word.length - input.length
+					, score:n - input.length
 					, contains:!!word.find(input)
 					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
 					, start:(word.find(input) = 1) || (word.split()[word.find(input) - 1] = " ")}
