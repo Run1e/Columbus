@@ -21,7 +21,7 @@ Class ItemList {
 				item.Remove("hide")
 			node := xml.add("lists/" this.name "/item", item,, true)
 			if rand_pos
-				return xml.move(node, xml.sn("//lists/" this.name "/item").item[Random(1, xml.sn("//lists/" this.name "/item").length)])
+				return xml.move(node, xml.sn("//lists/" this.name "/item").item[Random(0, xml.sn("//lists/" this.name "/item").length)])
 			else
 				return node
 		}
