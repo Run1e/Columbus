@@ -7,4 +7,4 @@ A Windows application that allows you to launch any program instantly using a fu
 * Check the inbuilt commands by typing a '/'
 * Press CTRL+ALT+O for the window focus changer.
 
-<img src='http://runie.me/?i=25g0X'>
+<img src='http://runie.me/?i=0bMFe'>
