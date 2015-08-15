@@ -9,9 +9,10 @@ A Windows application that allows you to launch any program instantly using a fu
 
 ### Tips
 * Type '/' to check out the inbuilt commands
-* the move command will allow you to move/resize the gui
+* The move command will allow you to move/resize the gui
 * CTRL+ALT+O to open the window switcher
-* Delete: delete selected item(s), or close window while in the window focus switcher
-* CTRL + Z: undo last deletion
-* CTRL + Scroll wheel (mouseover): increase or decrease the font size
+* Many things can be changed in the settings!
+* Del to delete selected item(s), or close window while in the window focus switcher
+* CTRL + Z to undo last deletion
+* CTRL + Scroll wheel (mouseover) to increase or decrease the font size
 * Escape: close GUI/back
