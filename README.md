@@ -7,6 +7,7 @@ A Windows application that allows you to launch any program instantly using a fu
 * Type away! (or use mouse, or arrow keys) and press enter to open the currently selected program.
 * Check the inbuilt commands by typing a '/'
 * Press CTRL+ALT+O for the window focus changer.
+
 ### Hotkeys
 * Delete: delete selected item(s)
 * CTRL + Z: undo deletion
