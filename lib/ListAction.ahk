@@ -30,7 +30,6 @@ ListAction(GuiEvent, EventInfo) {
 		cha.Control("focus", "Static1")
 		cha.Show()
 		cha.SetEvents({Close:"ChangeCancel", Escape:"ChangeCancel"})
-		return
 		
 		ChangeEdit:
 		tage["name"] := cha.GetText("Edit1")
