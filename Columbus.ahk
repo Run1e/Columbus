@@ -72,6 +72,10 @@ if FileExist(A_Appdata "\Columbus") {
 	} FileRemoveDir % A_Appdata "\Columbus", 1
 }
 
+; fixes drag&drop on vista+
+Loop 2
+	DllCall("ChangeWindowMessageFilter",uint,(a:=!a ? 0x49 : 0x233),uint,1)
+
 ; set up tray menu
 Menu, Tray, NoStandard
 Menu, Tray, Add, Show Columbus, MenuHandler

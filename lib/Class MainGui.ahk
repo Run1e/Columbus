@@ -42,7 +42,7 @@ Class MainGui extends Gui {
 			FileGetShortcut, % file, target,, Args
 			SplitPath, file,,, ext, name
 			run := (target ? target : file) . (Args ? " " Args : "")
-			if (node := xml.ssn("//" Settings.List "[@name='" name "']")) {
+			if (node := xml.ssn("//items[@name='" name "']")) {
 				if (ext != "exe") {
 					m("'" name "' does not point to an executable")
 					continue
