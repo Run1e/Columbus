@@ -66,12 +66,15 @@ Update(notify := false, force := false) {
 	upd.Destroy(), Main.Destroy(), upd:=Main:=Fokus:=""
 	Tray.SetTimeout(999)
 	Tray.Tip("Downloading update..")
-	if (!A_AhkPath.length && !exe) {
-		MsgBox, 4, Warning, % "You have selected to download as an AHK file, but you do not have AHK installed.`n`nDo you want to download as an EXE instead?"
-		ifMsgBox yes
-			exe := true
-	} Settings.UpdateExt := (exe ? "exe" : "ahk")
-	if exe
+	if force
+		exe := (Settings.UpdateExt = "exe")
+	else {
+		if (!A_AhkPath.length && !exe) {
+			MsgBox, 4, Warning, % "You have selected to download as an AHK file, but you do not have AHK installed.`n`nDo you want to download as an EXE instead?"
+			ifMsgBox yes
+				exe := true
+		} Settings.UpdateExt := (exe ? "exe" : "ahk")
+	} if exe
 		UrlDownloadToFile % url . "Columbus.exe", download
 	else
 		FileAppend % Send(url . "Columbus.ahk"), download
