@@ -1,4 +1,4 @@
-Update(notify := false) {
+Update(notify := false, force := false) {
 	static
 	
 	if WinExist(upd.ahkid) && upd.ahkid
@@ -20,6 +20,11 @@ Update(notify := false) {
 	}
 	
 	new_version := trim(master.split("`n")[1], "`r")
+	
+	if force {
+		gosub UpdateUpdate
+		return
+	}
 	
 	if (new_version > version) && (new_version <> (notify ? 0 : Settings.LastUpdatePrompt)) { ; new unnotified update! set up the gui!!!!!!
 		upd := New Gui("Columbus Updater")
@@ -58,7 +63,7 @@ Update(notify := false) {
 	
 	UpdateUpdate:
 	ControlGet, exe, Checked,, Button1, % upd.ahkid
-	upd.Destroy(), Main.Destroy(), upd:=Main:=""
+	upd.Destroy(), Main.Destroy(), upd:=Main:=Fokus:=""
 	Tray.SetTimeout(999)
 	Tray.Tip("Downloading update..")
 	if (!A_AhkPath.length && !exe) {

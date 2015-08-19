@@ -109,14 +109,13 @@ Settings() {
 	SelectColor:
 	set.Disable()
 	ControlGetText, col, Static14, % set.ahkid
-	set.Enable()
 	if !((col := ColorPicker(col)).length) {
 		WinActivate % set.ahkid
 		return
-	}
-	WinActivate % set.ahkid
+	} WinActivate % set.ahkid
 	CtlColors.Change(texthwnd, col, "FFFFFF")
 	set.Control(, "Static14", col)
+	set.Enable()
 	return
 	
 	Select:

@@ -10,12 +10,12 @@ Class Commands {
 	, "reset - reset everything"
 	, "exit - exit the program"]
 	
-	__Call(cmd) {
-		if (cmd = "listvars")
-			listvars
-		else if (cmd = "test") {
-			Main.RowSnap(Settings.Pos.Height)
-		}
+	test() {
+		
+	}
+	
+	listvars() {
+		listvars
 	}
 	
 	refresh() {
@@ -24,6 +24,10 @@ Class Commands {
 	
 	reload() {
 		reload
+	}
+	
+	lice() {
+		run C:\Program Files (x86)\LICEcap\licecap.exe
 	}
 	
 	rel(gui := false) {
@@ -96,8 +100,8 @@ Class Commands {
 			Main.Move()
 	}
 	
-	update() {
-		Update(true)
+	update(force := false) {
+		Update(true, force)
 	}
 	
 	reset() {

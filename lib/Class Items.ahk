@@ -11,7 +11,7 @@ Class Items extends ItemList {
 		if Settings.Verify
 			this.Verify()
 		this.Refresh()
-		this.freqlist := true
+		this.ModifyCol := {1:[2, "SortDesc"]}
 	}
 	
 	; detects chrome apps
@@ -20,9 +20,9 @@ Class Items extends ItemList {
 		Loop, Files, %A_AppData%\..\Local\Google\Chrome\User Data\Default\Web Applications\*.*, R
 			if (A_LoopFileExt = "ico")
 				this.add({name:SubStr(A_LoopFileName, 1, -4)
-						, run:"""" ProgFiles "\Google\Chrome\Application\chrome.exe"" --app-id=" SubStr(A_LoopFileDir, InStr(A_LoopFileDir, "_crx_") + 5)
-						, icon:A_LoopFileFullPath
-						, freq:0})
+		, run:"""" ProgFiles "\Google\Chrome\Application\chrome.exe"" --app-id=" SubStr(A_LoopFileDir, InStr(A_LoopFileDir, "_crx_") + 5)
+		, icon:A_LoopFileFullPath
+		, freq:0})
 	}
 	
 	; Verifies items

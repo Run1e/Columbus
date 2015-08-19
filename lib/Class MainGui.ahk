@@ -25,6 +25,10 @@ Class MainGui extends Gui {
 		Plugin.Event("OnHide", true)
 	}
 	
+	AltRows() { ; wrapper
+		this.CLV.AlternateRows(hexshade(Settings.Color, 2))
+	}
+	
 	SetText(text := "") {
 		GuiControl % this.hwnd ":", Edit1, % text
 	}
@@ -54,7 +58,7 @@ Class MainGui extends Gui {
 			if (run.length && name.length)
 				Items.add({name:name, run:run}), added.=name "`n"
 		} if added {
-			Items.Refresh(), this.SetText()
+			Items.Refresh(), this.SetText(), this.AltRows()
 			TrayTip, Programs added, % added
 		}
 		
@@ -136,23 +140,23 @@ Class MainGui extends Gui {
 	
 	; size the listview item width, part of Main.Size()
 	SizeCol() {  ;#[add := false]
-		Main.SetDefault()
-		LV_ModifyCol(1, Settings.Pos.Width - (LV_GetCount() <= Settings.Rows ? 0 : 17))
-	}
-	
-	; size the controls to fit.
-	Size(w, h) {
-		this.Control("Move", "Edit1", "w" w " y" h - 25)
-		this.Control("Move", "SysListView321", "w" w " h" h - 25)
-		this.Control("Move", "Static1", "x" w / 2 - 102 " y" h / 2 - 21)
-		this.SizeCol()
-	}
-	
-	; runs after ctrl has been released
-	SizeList() {
-		if Settings.RowSnap
-			Main.RowSnap(Settings.Pos.Height)
-		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
-		Main.Pos(, Settings.Pos.Y,, Settings.Pos.Height)
-	}
+	Main.SetDefault()
+	LV_ModifyCol(1, Settings.Pos.Width - (LV_GetCount() <= Settings.Rows ? 0 : 17))
+}
+
+; size the controls to fit.
+Size(w, h) {
+	this.Control("Move", "Edit1", "w" w " y" h - 25)
+	this.Control("Move", "SysListView321", "w" w " h" h - 25)
+	this.Control("Move", "Static1", "x" w / 2 - 102 " y" h / 2 - 21)
+	this.SizeCol()
+}
+
+; runs after ctrl has been released
+SizeList() {
+	if Settings.RowSnap
+		Main.RowSnap(Settings.Pos.Height)
+	Main.Size(Settings.Pos.Width, Settings.Pos.Height)
+	Main.Pos(, Settings.Pos.Y,, Settings.Pos.Height)
+}
 }

@@ -5,26 +5,26 @@ Fuzzy(input, arr){ ; magic happens here
 		return list
 	} t:=[]
 	for index, word in arr { ; loop the array word for word
-		m:=[], i:=0
+		m:=[], i:=0, ws := word.split()
 		for z, a in input.split() ; split in the input
-			for v, b in word.split()
+			for v, b in ws
 				if (a = b) && !m[a, v] { ; figure out how many matching letters we have
 					m[a, v] := true, i++
 					continue 2
 				}
 		if (i = input.length) { ; all letters from input is in word
-			outline := (split := word.split())[1]
-			for x, v in split
+			outline := ws[1]
+			for x, v in ws
 				if v.equals(" ", ".")
-					outline .= split[A_Index+1]
+					outline .= ws[A_Index+1]
 			for g, h in m, n := ""
 				if (h.MaxIndex() > n)
 					n := h.MaxIndex()
 			item := { name:word
-					, score:n - input.length
-					, contains:!!word.find(input)
-					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
-					, start:(word.find(input) = 1) || (word.split()[word.find(input) - 1] = " ")}
+			, score:n - input.length
+			, contains:!!word.find(input)
+			, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
+			, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}
 			if t.MaxIndex() {
 				for a, b in t, added:=false
 					if (b.score >= item.score) {
@@ -48,9 +48,10 @@ FuzzyWrap(input, arr) {
 		LV_Add("Icon" . ItemList.Lists[Settings.List].Icon[b.name], b.name, ItemList.Lists[Settings.List].Freq[b.name])
 	if !LV_GetCount()
 		LV_Add("Icon1", "No results!")
-	if Settings.FreqSort && !input.length && ItemList.Lists[Settings.List].freqlist
-		LV_ModifyCol(2, "SortDesc")
-	LV_Modify(1, "Select")
+	if !input.length {
+		for a, b in ItemList.Lists[Settings.List].ModifyCol
+			LV_ModifyCol(b.1, b.2)
+	} LV_Modify(1, "Select")
 	Main.SizeCol()
 	Main.Control("+Redraw", "SysListView321")
 }

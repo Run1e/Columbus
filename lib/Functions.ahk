@@ -24,6 +24,12 @@ ColorPicker(col := ""){
 	return Format("{:06x}", (c<<16&0xFF0000 | c&0xFF00 | c>>16&0xFF)).toUpper
 }
 
+hexshade(col, amt) {
+    a := "0x" . col
+	newColor := (a & 0x0000FF) + amt | ((((a >> 8) & 0x00FF) + amt) << 8) | (((a >> 16) + amt) << 16)
+    return newcolor
+}
+
 print(text) {
 	if text.find(".") {
 		obj := text.split(".")[1]
@@ -57,9 +63,9 @@ CreateDIB(PixelData, W, H, ResizeW := 0, ResizeH := 0, Gradient := 1) {
 RandomString(length, special := false) {
 	Loop % length
 		str .= (r := Random(1, special ? 4 : 3)) = 1
-				? Random(0, 9) : r = 2
-				? Chr(Random(65, 90)) : r = 3
-				? Chr(Random(97, 122)) : SubStr("-_?!&:", r := Random(1, 6), 1)
+	? Random(0, 9) : r = 2
+	? Chr(Random(65, 90)) : r = 3
+	? Chr(Random(97, 122)) : SubStr("-_?!&:", r := Random(1, 6), 1)
 	return % str
 }
 
@@ -111,8 +117,8 @@ UriEncode(Uri) { ; thanks to GeekDude for providing this function!
 	while Code := NumGet(Var, A_Index - 1, "UChar")
 		if (Code >= 0x30 && Code <= 0x39 ; 0-9
 			|| Code >= 0x41 && Code <= 0x5A ; A-Z
-			|| Code >= 0x61 && Code <= 0x7A) ; a-z
-			Res .= Chr(Code)
+	|| Code >= 0x61 && Code <= 0x7A) ; a-z
+	Res .= Chr(Code)
 	else
 		Res .= "%" . SubStr(Code + 0x100, -1)
 	SetFormat, IntegerFast, %f%
