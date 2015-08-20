@@ -7,7 +7,6 @@ Class ItemList {
 			xml.add("lists/" name)
 		this.Refresh()
 		ItemList.Lists[name] := this
-		this.freqlist := false
 	}
 	
 	; add a new item, it will be placed randomly in the list
@@ -25,6 +24,10 @@ Class ItemList {
 			else
 				return node
 		}
+	}
+	
+	Remove(item) {
+		xml.delete(xml.ssn("//lists/" this.name "/item[@name ='" item "']"))
 	}
 	
 	; iterates the freq value in a section
@@ -57,8 +60,7 @@ Class ItemList {
 			if !b.hide { ; yes, I'm using three arrays to store the item information. ahk is borderline stupid and always sorts array indexes alphabetically.
 				this.List.Insert(b.name)
 				this.Icon[b.name] := IL_Add(this.ImageList, b.icon ? b.icon : b.run)
-				if this.freqlist
-					this.Freq[b.name] := b.freq
+				this.Freq[b.name] := b.freq
 			}
 	}
 }

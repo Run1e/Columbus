@@ -20,7 +20,7 @@ ListAction(GuiEvent, EventInfo) {
 		cha.Add("Text",, "Name:")
 		cha.Margin(5, 4)
 		cha.Add("Edit", "x50 y4 w130 R1 gChangeEdit", name)
-		cha.Add("Button", "gChangerun x7", "Change directory")
+		cha.Add("Button", "gChangerun x7", "Change target")
 		cha.Add("Button", "gChangeicon x107 yp", "Change icon")
 		if Settings.Debug
 			cha.Add("Button", "gChangePrint x7 y57", "Print info")

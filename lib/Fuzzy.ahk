@@ -21,10 +21,10 @@ Fuzzy(input, arr){ ; magic happens here
 				if (h.MaxIndex() > n)
 					n := h.MaxIndex()
 			item := { name:word
-			, score:n - input.length
-			, contains:!!word.find(input)
-			, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
-			, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}
+					, score:n - input.length
+					, contains:!!word.find(input)
+					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
+					, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}
 			if t.MaxIndex() {
 				for a, b in t, added:=false
 					if (b.score >= item.score) {
@@ -49,8 +49,11 @@ FuzzyWrap(input, arr) {
 	if !LV_GetCount()
 		LV_Add("Icon1", "No results!")
 	if !input.length {
-		for a, b in ItemList.Lists[Settings.List].ModifyCol
-			LV_ModifyCol(b.1, b.2)
+		if (Settings.List = "items") && Settings.FreqSort
+			LV_ModifyCol(2, "SortDesc")
+		else
+			for a, b in ItemList.Lists[Settings.List].ModifyCol
+				LV_ModifyCol(b.1, b.2)
 	} LV_Modify(1, "Select")
 	Main.SizeCol()
 	Main.Control("+Redraw", "SysListView321")

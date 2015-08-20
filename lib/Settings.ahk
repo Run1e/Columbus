@@ -43,7 +43,7 @@ Settings() {
 	set.Tab(1)    ; General
 	set.Add("Groupbox", "x126 y-6 w220 h" height+11)
 	set.Add("CheckBox", "x135 y10 Checked" Settings.StartUp, "Launch on Startup")
-	set.Add("CheckBox", "Checked" Settings.CheckForUpdates, "Check for Updates")
+	set.Add("CheckBox", "Checked" Settings.UpdateCheck, "Check for Updates")
 	set.Add("CheckBox", "Checked" Settings.RowSnap, "Enable RowSnap")
 	set.Add("CheckBox", "Checked" Settings.FreqSort, "Sort items by popularity")
 	set.Add("CheckBox", "Checked" Settings.Verify, "Verify Items")

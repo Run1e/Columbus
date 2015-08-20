@@ -104,6 +104,24 @@ Class MainGui extends Gui {
 		return
 	}
 	
+	Pos(x := "", y := "", w := "", h := "") {
+		Gui % this.hwnd ":Show", % (x.length ? "x" x : "") 
+								. (y.length ? " y" y : "") 
+								. (w.length ? " w" w : "") 
+								. (h.length ? " h" h : "")
+								. (this.IsVisible ? "" : " hide")
+		arr := []
+		if x.length
+			arr.X := x
+		if y.length
+			arr.Y := y
+		if w.length
+			arr.Width := w
+		if h.length
+			arr.Height := h
+		Settings.Pos := arr
+	}
+	
 	FontSize(i) {
 		MouseGetPos,,,, control
 		if (control = "SysListView321") {
@@ -112,6 +130,7 @@ Class MainGui extends Gui {
 			this.Control("Font", "SysListView321")
 			this.GetRowHeight() ; set Settings.Rows so Size() can resize the spacer
 			this.Size(Settings.Pos.Width, Settings.Pos.Height, true) ; size controls
+			this.ListResized := true
 		}
 	}
 	
@@ -139,24 +158,27 @@ Class MainGui extends Gui {
 	}
 	
 	; size the listview item width, part of Main.Size()
-	SizeCol() {  ;#[add := false]
-	Main.SetDefault()
-	LV_ModifyCol(1, Settings.Pos.Width - (LV_GetCount() <= Settings.Rows ? 0 : 17))
-}
-
-; size the controls to fit.
-Size(w, h) {
-	this.Control("Move", "Edit1", "w" w " y" h - 25)
-	this.Control("Move", "SysListView321", "w" w " h" h - 25)
-	this.Control("Move", "Static1", "x" w / 2 - 102 " y" h / 2 - 21)
-	this.SizeCol()
-}
-
-; runs after ctrl has been released
-SizeList() {
-	if Settings.RowSnap
-		Main.RowSnap(Settings.Pos.Height)
-	Main.Size(Settings.Pos.Width, Settings.Pos.Height)
-	Main.Pos(, Settings.Pos.Y,, Settings.Pos.Height)
-}
+	SizeCol() {
+		Main.SetDefault()
+		LV_ModifyCol(1, Settings.Pos.Width - (LV_GetCount() <= Settings.Rows ? 0 : 17))
+	}
+	
+	; size the controls to fit.
+	Size(w, h) {
+		this.Control("Move", "Edit1", "w" w " y" h - 25)
+		this.Control("Move", "SysListView321", "w" w " h" h - 25)
+		this.Control("Move", "Static1", "x" w / 2 - 102 " y" h / 2 - 21)
+		this.SizeCol()
+	}
+	
+	; runs after ctrl has been released
+	SizeList() {
+		if !this.ListResized
+			return
+		if Settings.RowSnap
+			Main.RowSnap(Settings.Pos.Height)
+		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
+		Main.Pos(, Settings.Pos.Y,, Settings.Pos.Height)
+		this.ListResized := false
+	}
 }

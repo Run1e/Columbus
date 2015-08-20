@@ -37,6 +37,10 @@ Class Plugin {
 			return ItemList.Lists[name] := New ItemList(name)
 	}
 	
+	DeleteList(name) {
+		
+	}
+	
 	; set a new list to the listview
 	SetList(list) {
 		Settings.List := list
