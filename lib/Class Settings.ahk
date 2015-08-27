@@ -7,6 +7,7 @@ Class Settings {
 									, ScanTime:			5
 									, FreqSort:			true
 									, Verify:			false
+									, RunAsAdmin:		true
 									, Prefix:			"/"
 									, UpdateExt: 		FileExt(A_ScriptFullPath)
 									, LastUpdatePrompt: 0

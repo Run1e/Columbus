@@ -7,14 +7,6 @@ SetBatchLines -1
 DetectHiddenWindows On
 OnExit, Exit
 
-if !A_IsAdmin {
-	if A_IsCompiled
-		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_ScriptFullPath, str, "" , str, A_WorkingDir, int, 1)
-	else	
-		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_AhkPath, str, """" . A_ScriptFullPath . """" . A_Space . "", str, A_WorkingDir, int, 1)
-	ExitApp
-}
-
 ; string base definitions
 "".base.__Get := Func("String_PseudoProperties")
 "".base.find := Func("String_Find")
@@ -23,6 +15,27 @@ if !A_IsAdmin {
 "".base.contains := Func("String_Contains")
 "".base.startsWith := Func("String_StartsWith")
 "".base.endsWith := Func("String_EndsWith")
+
+; init classes and vars
+global version
+;auto_version
+global xml := New xmlfile("Columbus", A_WorkingDir "\Columbus.xml")
+global Settings := New Settings()
+global Plugin := New Plugin("{436cf066-cf70-4ca9-990f-c7083fea8367}")
+global Main := New MainGui("Columbus")
+global Fokus := New FokusGui("Fokus")
+global Items := New Items("items")
+global Hotkey := New Hotkey()
+global Commands := New Commands()
+global Tray := New Tray()
+
+if !A_IsAdmin && Settings.RunAsAdmin {
+	if A_IsCompiled
+		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_ScriptFullPath, str, "" , str, A_WorkingDir, int, 1)
+	else	
+		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_AhkPath, str, """" . A_ScriptFullPath . """" . A_Space . "", str, A_WorkingDir, int, 1)
+	ExitApp
+}
 
 if !FileExist(A_ProgramFiles "\Columbus")
 	FileCreateDir % A_ProgramFiles "\Columbus"
@@ -45,19 +58,6 @@ if !FileExist(A_WorkingDir "\Plugins")
 		ExitApp
 	}
 */
-
-; init classes and vars
-global version
-;auto_version
-global xml := New xmlfile("Columbus", A_WorkingDir "\Columbus.xml")
-global Settings := New Settings()
-global Plugin := New Plugin("{436cf066-cf70-4ca9-990f-c7083fea8367}")
-global Main := New MainGui("Columbus")
-global Fokus := New FokusGui("Fokus")
-global Items := New Items("items")
-global Hotkey := New Hotkey()
-global Commands := New Commands()
-global Tray := New Tray()
 
 ; ! testing
 ; RegWrite, REG_SZ, HKEY_CLASSES_ROOT\columbus\shell\open\command,, % """" A_WorkingDir """" " -- """ "%1" """"
