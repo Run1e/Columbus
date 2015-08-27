@@ -16,20 +16,14 @@ OnExit, Exit
 "".base.startsWith := Func("String_StartsWith")
 "".base.endsWith := Func("String_EndsWith")
 
-; init classes and vars
-global version
-;auto_version
+if !FileExist(A_ProgramFiles "\Columbus")
+	FileCreateDir % A_ProgramFiles "\Columbus"
+SetWorkingDir % A_ProgramFiles "\Columbus"
+
 global xml := New xmlfile("Columbus", A_WorkingDir "\Columbus.xml")
 global Settings := New Settings()
-global Plugin := New Plugin("{436cf066-cf70-4ca9-990f-c7083fea8367}")
-global Main := New MainGui("Columbus")
-global Fokus := New FokusGui("Fokus")
-global Items := New Items("items")
-global Hotkey := New Hotkey()
-global Commands := New Commands()
-global Tray := New Tray()
 
-if !A_IsAdmin && Settings.RunAsAdmin {
+if !A_IsAdmin && (Settings.RunAsAdmin != 0) {
 	if A_IsCompiled
 		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_ScriptFullPath, str, "" , str, A_WorkingDir, int, 1)
 	else	
@@ -37,17 +31,19 @@ if !A_IsAdmin && Settings.RunAsAdmin {
 	ExitApp
 }
 
-if !FileExist(A_ProgramFiles "\Columbus")
-	FileCreateDir % A_ProgramFiles "\Columbus"
-if ErrorLevel {
-	m("Unable to create directory.`nMake sure the program is running as administrator.")
-	ExitApp
-}
-
-SetWorkingDir % A_ProgramFiles "\Columbus"
-
 if !FileExist(A_WorkingDir "\Plugins")
 	FileCreateDir % A_WorkingDir "\Plugins"
+
+; init classes and vars
+global version
+;auto_version
+global Plugin := New Plugin("{436cf066-cf70-4ca9-990f-c7083fea8367}")
+global Main := New MainGui("Columbus")
+global Fokus := New FokusGui("Fokus")
+global Items := New Items("items")
+global Hotkey := New Hotkey()
+global Commands := New Commands()
+global Tray := New Tray()
 
 /*
 	if A_IsCompiled && !FileExist(A_WorkingDir "\Columbus.exe") { ; save exe to programfiles and create a shortcut

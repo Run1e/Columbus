@@ -9,7 +9,7 @@ Class ItemList {
 		ItemList.Lists[name] := this
 	}
 	
-	; add a new item, it will be placed randomly in the list
+	; add a new item
 	Add(item, run := "", icon := "", hide := false, rand_pos := false) {
 		if run.length
 			temp := item, item := {name:temp, run:run, icon:icon, freq:0, hide:hide}
