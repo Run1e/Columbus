@@ -10,7 +10,7 @@ Class ItemList {
 	}
 	
 	; add a new item
-	Add(item, run := "", icon := "", hide := false, rand_pos := false) {
+	Add(item, run := "", icon := "", rand_pos := false, hide := false) {
 		if run.length
 			temp := item, item := {name:temp, run:run, icon:icon, freq:0, hide:hide}
 		if !xml.ssn("//lists/" this.name "/item[@name='" item.name "']") {
