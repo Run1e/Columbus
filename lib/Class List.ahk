@@ -7,6 +7,7 @@ Class ItemList {
 			xml.add("lists/" name)
 		this.Refresh()
 		ItemList.Lists[name] := this
+		this.FreqSort := false
 	}
 	
 	; add a new item

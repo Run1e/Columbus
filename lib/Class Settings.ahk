@@ -36,7 +36,7 @@ Class Settings {
 			else
 				RegDelete, HKEY_LOCAL_MACHINE, SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run, Columbus
 		} if (key = "FreqSort")
-			ItemList.Lists[Settings.List].Refresh(), Main.SetText()
+			Items.FreqSort := value
 		else if (key = "ScanTime")
 			SetTimer, ScanTimer, % value * 1000
 		else if (key = "List")
@@ -48,7 +48,7 @@ Class Settings {
 			if value > 0
 				Main.SetRows(value)
 			else
-				m("Value invalid: " value)
+				m("Value invalid: " value "`nKey: " key)
 		}
 	}
 	

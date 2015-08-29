@@ -94,10 +94,11 @@ Loop % A_WorkingDir "\Plugins\*.ahk"
 {
 	if !xml.ssn("//plugins/plugin[@name='" SubStr(A_LoopFileName, 1, -4) "']") ; add files to plugin node
 		xml.add("plugins/plugin", {name:SubStr(A_LoopFileName, 1, -4), run:false},, true)
+	Menu, Plugins, Add, % SubStr(A_LoopFileName, 1, -4), MenuHandler
 	if (A_Index = 1) {
 		Menu, Tray, Add, Plugins, :Plugins
 		Menu, Tray, Add
-	} Menu, Plugins, Add, % SubStr(A_LoopFileName, 1, -4), MenuHandler
+	}
 }
 
 Menu, Tray, Add, Exit, Exit

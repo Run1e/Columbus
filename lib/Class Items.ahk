@@ -11,7 +11,7 @@ Class Items extends ItemList {
 		if Settings.Verify
 			this.Verify()
 		this.Refresh()
-		this.ModifyCol := {1:[2, "SortDesc"]}
+		this.FreqSort := Settings.FreqSort
 	}
 	
 	; detects chrome apps

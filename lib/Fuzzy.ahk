@@ -49,11 +49,8 @@ FuzzyWrap(input, arr) {
 	if !LV_GetCount()
 		LV_Add("Icon1", "No results!")
 	if !input.length {
-		if (Settings.List = "items") && Settings.FreqSort
+		if ((Settings.List = "items") && Settings.FreqSort) || (ItemList.Lists[Settings.List].FreqSort = true)
 			LV_ModifyCol(2, "SortDesc")
-		else
-			for a, b in ItemList.Lists[Settings.List].ModifyCol
-				LV_ModifyCol(b.1, b.2)
 	} LV_Modify(1, "Select")
 	Main.SizeCol()
 	Main.Control("+Redraw", "SysListView321")
