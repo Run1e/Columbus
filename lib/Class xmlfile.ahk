@@ -127,7 +127,7 @@ class xmlfile {
 		file:=fileopen(this.file,3,"UTF-8"),file.seek(0),file.write(this[]),file.length(file.position)
 	}
 	
-	; EasyAttribute - the easy way to get attributesÃ¢â€žÂ¢
+	; EasyAttribute - the easy way to get attributesâ„¢
 	ea(path){
 		temp:=[]
 		nodes:=path.nodename?path.SelectNodes("@*"):path.text?this.sn("//*[text()='" path.text "']/@*"):!IsObject(path)?this.sn(path "/@*"):""

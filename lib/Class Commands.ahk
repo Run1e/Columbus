@@ -1,14 +1,14 @@
 Class Commands {
-	static List := [  "manager - open the item manager"
-	, "settings - open the settings menu"
-	; , "docs - search through the AHK documentation"
-	, "g/w - google/wolfram search"
-	, "move - drag and resize the window"
-	, "update - check for updates"
-	; , "specs - systeminfo (beta)"
-	, "about - about Columbus"
-	, "reset - reset everything"
-	, "exit - exit the program"]
+	static List := [ "manager - open the item manager"
+				, "settings - open the settings menu"
+				; , "docs - search through the AHK documentation"
+				, "g/w - google/wolfram search"
+				, "move - drag and resize the window"
+				, "update - check for updates"
+				; , "specs - systeminfo (beta)"
+				, "about - about Columbus"
+				, "reset - reset everything"
+				, "exit - exit the program"]
 	
 	test() {
 		
@@ -83,14 +83,18 @@ Class Commands {
 		Tray.Destroy()
 	}
 	
-	g(search := "") {
+	g(search*) {
+		for a, b in search
+			c .= b " "
 		Main.Hide()
-		run("https://www.google.com/?q=" UriEncode(search))
+		run("https://www.google.com/?q=" UriEncode(SubStr(c, 1, -1)))
 	}
 	
-	w(search := "") {
+	w(search*) {
+		for a, b in search
+			c .= b " "
 		Main.Hide()
-		run("http://www.wolframalpha.com/input/?i=" UriEncode(search))
+		run("http://www.wolframalpha.com/input/?i=" UriEncode(SubStr(c, 1, -1)))
 	}
 	
 	move(res := false) {

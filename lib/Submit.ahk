@@ -1,4 +1,4 @@
-Submit() {
+Submit() {  ;#[what if result is "No results!"?????]
 	Main.SetDefault()
 	
 	input := Main.GetText()

@@ -1,24 +1,24 @@
 Class Settings {
 	__New() {
-		for a, b in this.default := { Hotkeys: 			{Main:"^!P", Fokus:"^!O"}
-									, StartUp: 			true
-									, UpdateCheck: 		true
-									, Debug: 			false
-									, ScanTime:			5
-									, FreqSort:			true
-									, Verify:			false
-									; , RunAsAdmin:		true
-									, Prefix:			"/"
-									, UpdateExt: 		FileExt(A_ScriptFullPath)
-									, LastUpdatePrompt: 0
-									, List:				"items"
-									, Fade:				65
-									, Rows:				11
-									, RowSnap:			true
-									, LargeIcons:		true
-									, Font:				{Type:"Candara", Size:13, Bold:false}
-									, Color:			"3A3A3A"
-									, Pos:				{X:A_ScreenWidth-502, Y:A_ScreenHeight-397, Width:500, Height:355}}
+		for a, b in this.default := {   Hotkeys: 			{Main:"^!P", Fokus:"^!O"}
+								, StartUp: 			true
+								, UpdateCheck: 		true
+								, Debug: 				false
+								, ScanTime:			5
+								, FreqSort:			true
+								, Verify:				false
+								; , RunAsAdmin:		true
+								, Prefix:				"/"
+								, UpdateExt: 			FileExt(A_ScriptFullPath)
+								, LastUpdatePrompt: 	0
+								, List:				"items"
+								, Fade:				65
+								, Rows:				11
+								, RowSnap:			true
+								, LargeIcons:			true
+								, Font:				{Type:"Candara", Size:13, Bold:false}
+								, Color:				"3A3A3A"
+								, Pos:				{X:A_ScreenWidth-502, Y:A_ScreenHeight-397, Width:500, Height:355}}
 		{
 			if IsObject(b) {
 				for z, x in b

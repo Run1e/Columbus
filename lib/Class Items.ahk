@@ -1,6 +1,6 @@
 Class Items extends ItemList {
 	static name_keywords := ["unin", "driver", "help", "update", "NVIDIA", "eReg", ".NET", "Microsoft Security Client", "Battlelog", "AutoHotkey " A_AhkVersion]
-	, dir_keywords := ["unin", "driver", "help", "update", "{", "["]
+		, dir_keywords := ["unin", "driver", "help", "update", "{", "["]
 	
 	; Pack all the .scan() calls into one function that is called from outside
 	Search() {
@@ -29,7 +29,7 @@ Class Items extends ItemList {
 	Verify() {
 		for a, b in xml.get("//items/item")
 			if !b.run.contains("steam://rungameid/", "--app-id=") && !FileExist(b.run)
-				xml.Delete(a)
+				xml.Delete(b.node)
 	}
 	
 	; Loops & parses the registry for programs to add to the list

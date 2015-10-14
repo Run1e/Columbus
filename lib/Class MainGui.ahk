@@ -106,10 +106,10 @@ Class MainGui extends Gui {
 	
 	Pos(x := "", y := "", w := "", h := "") {
 		Gui % this.hwnd ":Show", % (x.length ? "x" x : "") 
-								. (y.length ? " y" y : "") 
-								. (w.length ? " w" w : "") 
-								. (h.length ? " h" h : "")
-								. (this.IsVisible ? "" : " hide")
+							. (y.length ? " y" y : "") 
+							. (w.length ? " w" w : "") 
+							. (h.length ? " h" h : "")
+							. (this.IsVisible ? "" : " hide")
 		arr := []
 		if x.length
 			arr.X := x
