@@ -19,11 +19,12 @@ Class ItemList {
 				item.Remove("icon")
 			if (item.hide = 0)
 				item.Remove("hide")
+			if !FileExt(item.run) && (item.icon.length = 0)
+				item.icon := "folder"
 			node := xml.add("lists/" this.name "/item", item,, true)
 			if rand_pos
 				return xml.move(node, xml.sn("//lists/" this.name "/item").item[Random(0, xml.sn("//lists/" this.name "/item").length)])
-			else
-				return node
+			return node
 		}
 	}
 	
@@ -60,7 +61,10 @@ Class ItemList {
 		for a, b in xml.get("//lists/" this.name "/item")
 			if !b.hide { ; yes, I'm using three arrays to store the item information. ahk is borderline stupid and always sorts array indexes alphabetically.
 				this.List.Insert(b.name)
-				this.Icon[b.name] := IL_Add(this.ImageList, b.icon ? b.icon : b.run)
+				if (b.icon = "folder")
+					this.Icon[b.name] := IL_Add(this.ImageList, "shell32.dll", 4)
+				else
+					this.Icon[b.name] := IL_Add(this.ImageList, b.icon ? b.icon : b.run)
 				this.Freq[b.name] := b.freq
 			}
 	}

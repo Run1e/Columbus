@@ -20,7 +20,7 @@ Fuzzy(input, arr){ ; magic happens here
 			for g, h in m, n := ""
 				if (h.MaxIndex() > n)
 					n := h.MaxIndex()
-			item := { name:word
+			item := {   name:word
 					, score:n - input.length
 					, contains:!!word.find(input)
 					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)

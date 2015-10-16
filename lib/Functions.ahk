@@ -9,6 +9,13 @@ FileExt(file) {
 	return ext
 }
 
+WinGetPos(WinTitle:="", WinText:="") {
+	WinGetPos, x, y, w, h, % WinTitle, % WinText
+	for a, b in StrSplit("XYWH"), z:=[]
+		z[b]:=%b%
+	return z
+}
+
 ColorPicker(col := ""){
 	col := SubStr(col, 5, 2) . SubStr(col, 3, 2) . SubStr(col, 1, 2)
 	col := Format("0x{:x}", (InStr(col, "0x") ? col : "0x" col))
@@ -25,9 +32,9 @@ ColorPicker(col := ""){
 }
 
 hexshade(col, amt) {
-    a := "0x" . col
+	a := "0x" . col
 	newColor := (a & 0x0000FF) + amt | ((((a >> 8) & 0x00FF) + amt) << 8) | (((a >> 16) + amt) << 16)
-    return newcolor
+	return newcolor
 }
 
 print(text) {
@@ -118,7 +125,7 @@ UriEncode(Uri) { ; thanks to GeekDude for providing this function!
 		if (Code >= 0x30 && Code <= 0x39 ; 0-9
 			|| Code >= 0x41 && Code <= 0x5A ; A-Z
 	|| Code >= 0x61 && Code <= 0x7A) ; a-z
-	Res .= Chr(Code)
+			Res .= Chr(Code)
 	else
 		Res .= "%" . SubStr(Code + 0x100, -1)
 	SetFormat, IntegerFast, %f%
