@@ -108,11 +108,12 @@ Class Commands {
 		Update(true, force)
 	}
 	
-	reset() {
-		MsgBox, 4, WARNING, Proceeding will reset every aspect of the program.`n`nContinue?
-		ifMsgBox no
-			return
-		FileDelete, Columbus.xml
+	reset(force := false) {
+		if !force {
+			MsgBox, 4, WARNING, Proceeding will reset every aspect of the program.`n`nContinue?
+			ifMsgBox no
+				return
+		} FileDelete, Columbus.xml
 		xml := "" ; destroy xml object so it doesn't write anything at exit
 		reload
 	}

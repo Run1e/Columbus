@@ -197,3 +197,9 @@ ObjRegisterActive(Object, CLSID, Flags:=0) {
 		throw Exception(format("Error 0x{:x}", hr), -1)
 	cookieJar[Object] := cookie
 }
+
+RegisterID(CLSID,APPID){
+	RegWrite,REG_SZ,HKCU,Software\Classes\%APPID%,,%APPID%
+	RegWrite,REG_SZ,HKCU,Software\Classes\%APPID%\CLSID,,%CLSID%
+	RegWrite,REG_SZ,HKCU,Software\Classes\CLSID\%CLSID%,,%APPID%
+}

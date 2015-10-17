@@ -2,9 +2,7 @@ Class Plugin {
 	__New(CLSID) {
 		this.Connections := []
 		ObjRegisterActive(this, CLSID)
-		RegWrite,REG_SZ,HKCU,Software\Classes\Columbus,,Columbus
-		RegWrite,REG_SZ,HKCU,Software\Classes\Columbus\CLSID,,%CLSID%
-		RegWrite,REG_SZ,HKCU,Software\Classes\CLSID\%CLSID%,,Columbus
+		RegisterID(CLSID, "Columbus")
 		for a, b in xml.get("//plugins/plugin")
 			if !FileExist(A_WorkingDir "\Plugins\" b.name ".ahk") ; delete plugins if they've been removed
 				xml.Delete(b.node)

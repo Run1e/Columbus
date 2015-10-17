@@ -11,7 +11,8 @@ Class MainGui extends Gui {
 		this.Control("+Redraw", "Edit1")
 		Gui % this.hwnd ": Show"
 		Plugin.Event("OnShow", true)
-	}
+		
+	} 
 	
 	Hide(force := false) {
 		if !force
