@@ -122,6 +122,11 @@ Class Commands {
 		Manager()
 	}
 	
+	repwin() { ; places window in the top-left corner
+		Settings.Pos := {X:5, Y:5, Width:500, Height:355}
+		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
+	}
+	
 	settings() {
 		Settings()
 	}

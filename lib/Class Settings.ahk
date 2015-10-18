@@ -18,7 +18,7 @@ Class Settings {
 								, LargeIcons:			true 
 								, Font:				{Type:"Candara", Size:13, Bold:false}
 								, Color:				"3A3A3A"
-								, Pos:				{X:A_ScreenWidth-502, Y:A_ScreenHeight-357-WinGetPos("ahk_class Shell_TrayWnd").H, Width:500, Height:355}}
+								, Pos:				{X:A_ScreenWidth-502, Y:A_ScreenHeight-357-((th:=WinGetPos("ahk_class Shell_TrayWnd").H)?th:70), Width:500, Height:355}}
 		{
 			if IsObject(b) {
 				for z, x in b
