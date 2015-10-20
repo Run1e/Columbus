@@ -9,6 +9,16 @@ FileExt(file) {
 	return ext
 }
 
+; 1=bottom, 2=left, 3=right, 4=top
+GetTaskbarPos(pos) {
+	if pos.X
+		return 3
+	else if pos.Y
+		return 1
+	else
+		return (pos.W > pos.H ? 4 : 2)
+}
+
 WinGetPos(WinTitle:="", WinText:="") {
 	WinGetPos, x, y, w, h, % WinTitle, % WinText
 	for a, b in StrSplit("XYWH"), z:=[]

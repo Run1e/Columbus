@@ -1,5 +1,11 @@
 Class Settings {
 	__New() {
+		pos := WinGetPos("ahk_class Shell_TrayWnd")
+		task := GetTaskbarPos(pos)
+		win := [{X:A_ScreenWidth-502, Y:A_ScreenHeight-357-pos.H, Width:500, Height:355} ; bottom
+			, {X:A_ScreenWidth-502, Y:A_ScreenHeight-357, Width:500, Height:355} ; left
+			, {X:A_ScreenWidth-502-pos.W, Y:A_ScreenHeight-357, Width:500, Height:355} ; right
+			, {X:A_ScreenWidth-502, Y:A_ScreenHeight-357, Width:500, Height:355}] ; top
 		for a, b in this.default := {   Hotkeys: 			{Main:"^!P", Fokus:"^!O"}
 								, StartUp: 			true
 								, UpdateCheck: 		true
@@ -7,7 +13,6 @@ Class Settings {
 								, ScanTime:			5
 								, FreqSort:			true
 								, Verify:				false
-								; , RunAsAdmin:		true
 								, Prefix:				(A_ComputerName = "DARKNIGHT-PC" ? "." : "/")
 								, UpdateExt: 			FileExt(A_ScriptFullPath)
 								, LastUpdatePrompt: 	0
@@ -18,7 +23,7 @@ Class Settings {
 								, LargeIcons:			true 
 								, Font:				{Type:"Candara", Size:13, Bold:false}
 								, Color:				"3A3A3A"
-								, Pos:				{X:A_ScreenWidth-502, Y:A_ScreenHeight-357-((th:=WinGetPos("ahk_class Shell_TrayWnd").H)?th:70), Width:500, Height:355}}
+								, Pos:				win[task]}
 		{
 			if IsObject(b) {
 				for z, x in b
