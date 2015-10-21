@@ -22,7 +22,7 @@ Class Items extends ItemList {
 				this.add({name:SubStr(A_LoopFileName, 1, -4)
 		, run:"""" ProgFiles "\Google\Chrome\Application\chrome.exe"" --app-id=" SubStr(A_LoopFileDir, InStr(A_LoopFileDir, "_crx_") + 5)
 		, icon:A_LoopFileFullPath
-		, freq:0},,,, true)
+		, freq:0},,, true)
 	}
 	
 	; Verifies items
@@ -49,7 +49,7 @@ Class Items extends ItemList {
 					FileLocation := this.search_directory(DisplayName, InstallLocation)
 				;FileLocation := RegExReplace(FileLocation, "\\\\", "\")
 				if DisplayName.length && FileLocation && DisplayIcon && !FileLocation.contains(this.dir_keywords) && !DisplayName.contains(this.name_keywords)
-					this.Add({name:DisplayName, run:FileLocation, icon:DisplayIcon, freq:0},,,, true)
+					this.Add({name:DisplayName, run:FileLocation, icon:DisplayIcon, freq:0},,, true)
 			}
 	}
 	
