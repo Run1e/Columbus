@@ -1,4 +1,4 @@
-Class Commands {
+Class CommandClass {
 	static List := [ "manager - open the item manager"
 				, "settings - open the settings menu"
 				; , "docs - search through the AHK documentation"
@@ -14,6 +14,17 @@ Class Commands {
 		
 	}
 	
+	cmd() {
+		for a, b in CommandClass
+			if A_Index > 1
+				cmds .= a "`n"
+		m("Full list of commands:","",cmds)
+	}
+	
+	help() {
+		this.cmd()
+	}
+	
 	listvars() {
 		listvars
 	}
@@ -22,15 +33,17 @@ Class Commands {
 		ItemList.Lists[Settings.List].Search(), Main.SetText()
 	}
 	
-	reload() {
-		reload
+	reload(gui := true) {
+		this.rel(gui)
 	}
 	
 	lice() {
 		run C:\Program Files (x86)\LICEcap\licecap.exe
 	}
 	
-	rel(gui := false) {
+	rel(gui := true) {
+		if gui
+			xml.add("settings/ReloadShowGui", {open:true}) ; open the window after reload if gui is true
 		reload
 	}
 	
@@ -76,7 +89,7 @@ Class Commands {
 	}
 	
 	tip(msg) {
-		Tray.Tip(msg)
+		Notify.Tip(msg)
 	}
 	
 	endtip() {
@@ -132,10 +145,10 @@ Class Commands {
 	}
 	
 	uninstall() {
-		Main.Hide(), Fokus.Hide()
+		Main.Hide()
 		MsgBox, 4, WARNING, Are you sure you want to uninstall Columbus?`n`nEverything related to Columbus will be removed.
 		ifMsgBox no
-			return Tray.Tip("Phew, that was close.")
+			return Notify.Tip("Phew, that was close.")
 		Plugin.Exit()
 		FileDelete % A_Desktop "\Columbus.lnk"
 		RegDelete, HKEY_LOCAL_MACHINE, SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run, Columbus

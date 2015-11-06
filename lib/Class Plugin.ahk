@@ -1,11 +1,9 @@
 Class Plugin {
 	__New(CLSID) {
 		this.Connections := []
+		this.History := []
 		ObjRegisterActive(this, CLSID)
 		RegisterID(CLSID, "Columbus")
-		for a, b in xml.get("//plugins/plugin")
-			if !FileExist(A_WorkingDir "\Plugins\" b.name ".ahk") ; delete plugins if they've been removed
-				xml.Delete(b.node)
 		this.version := version
 		this.path := A_ScriptFullPath
 		this.directory := A_ProgramFiles "\Columbus"
@@ -27,6 +25,17 @@ Class Plugin {
 		this.Connections.Remove(hwnd)
 	}
 	
+	AddTrayItem(name) {
+		Tray.Insert(10, name)
+	}
+	
+	AddTrayMenu(name, list) {
+		temp := New Menu(name)
+		for a, b in StrSplit(list, "`n")
+			temp.Add(b)
+		Tray.Insert(10, temp)
+	}
+	
 	; create a new list, return the list object if the list already exists
 	CreateList(name) {
 		if ItemList.Lists[name]
@@ -37,7 +46,7 @@ Class Plugin {
 	
 	DeleteList(name) {
 		ItemList.Lists[name] := ""
-		xml.delete("//lists/" name)
+		xml.delete("lists/" name)
 	}
 	
 	; set a new list to the listview
@@ -131,6 +140,16 @@ Class Plugin {
 	
 	
 	; =========== methods below this comment should not be called by a plugin script!! they are used by columbus to manage connected plugins! ===========
+	
+	UpdatePluginList() {
+		Loop % A_WorkingDir "\Plugins\*.ahk"
+			if !xml.ssn("//plugins/plugin[@name='" SubStr(A_LoopFileName, 1, -4) "']") ; add files to plugin node
+				xml.add("plugins/plugin", {name:SubStr(A_LoopFileName, 1, -4), run:false},, true), new := true
+		for a, b in xml.get("//plugins/plugin")
+			if !FileExist(A_WorkingDir "\Plugins\" b.name ".ahk") ; delete plugins if they've been removed
+				xml.Delete(b.node), new := true
+		return (new ? 1 : 0)
+	}
 	
 	Event(event, param*) {
 		for a, b in this.Connections {

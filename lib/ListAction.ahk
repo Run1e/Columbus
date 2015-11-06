@@ -15,7 +15,6 @@ ListAction(GuiEvent, EventInfo) {
 			return
 		tage := []
 		Hotkey.Disable(Settings.Hotkeys.Main)
-		Hotkey.Disable(Settings.Hotkeys.Fokus)
 		cha := new Gui("Edit item")
 		cha.Add("Text",, "Name:")
 		cha.Margin(5, 4)
@@ -69,7 +68,6 @@ ListAction(GuiEvent, EventInfo) {
 			ItemList.Lists[Settings.List].Refresh(), Main.SetText()
 		}
 		Hotkey.Enable(Settings.Hotkeys.Main)
-		Hotkey.Enable(Settings.Hotkeys.Fokus)
 		return
 	}
 }

@@ -4,9 +4,8 @@ Update(notify := false, force := false) {
 	if WinExist(upd.ahkid) && upd.ahkid
 		return
 	
-	Main.Hide(), Fokus.Hide()
+	Main.Hide()
 	Hotkey.Disable(Settings.Hotkeys.Main)
-	Hotkey.Disable(Settings.Hotkeys.Fokus)
 	
 	url := "http://runie.me/Columbus/"	
 	
@@ -14,7 +13,7 @@ Update(notify := false, force := false) {
 	
 	if (master.contains("DOCTYPE", "<div>") || !master.length) {
 		if notify
-			Tray.Tip("Failed fetching changelog file..")
+			Notify.Tip("Failed fetching changelog file..")
 		gosub UpdateClose
 		return
 	}
@@ -56,16 +55,16 @@ Update(notify := false, force := false) {
 		upd.SetEvents({Escape:"UpdateCancel", Close:"UpdateCancel"})
 	} else {
 		if notify
-			Tray.Tip("No new updates!")
+			Notify.Tip("No new updates!")
 		gosub UpdateClose
 	}
 	return
 	
 	UpdateUpdate:
 	ControlGet, exe, Checked,, Button1, % upd.ahkid
-	upd.Destroy(), Main.Destroy(), upd:=Main:=Fokus:=""
+	upd.Destroy(), Main.Destroy(), upd:=Main:=""
 	Tray.SetTimeout(999)
-	Tray.Tip("Downloading update..")
+	Notify.Tip("Downloading update..")
 	if force
 		exe := (Settings.UpdateExt = "exe")
 	else {
@@ -86,7 +85,7 @@ Update(notify := false, force := false) {
 		FileDelete % A_ScriptDir "\Columbus." Settings.UpdateExt
 		FileMove old, % A_ScriptFullPath
 		Tray.SetTimout(3)
-		Tray.Tip("Error", "Download failed.. restarting Columbus..")
+		Notify.Tip("Error", "Download failed.. restarting Columbus..")
 		while Tray.IsVisible
 			continue
 		reload
@@ -97,7 +96,6 @@ Update(notify := false, force := false) {
 	Settings.LastUpdatePrompt := RTrim(new_version, 0)
 	UpdateClose:
 	Hotkey.Enable(Settings.Hotkeys.Main)
-	Hotkey.Enable(Settings.Hotkeys.Fokus)
 	upd.Destroy(), upd:=changes:=""
 	return
 }

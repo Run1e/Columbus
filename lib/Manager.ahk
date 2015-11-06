@@ -1,8 +1,7 @@
 Manager() {
 	static man
-	Main.Hide(), Fokus.Hide(), Main.Disable()
+	Main.Hide(), Main.Disable()
 	Hotkey.Disable(Settings.Hotkeys.Main)
-	Hotkey.Disable(Settings.Hotkeys.Fokus)
 	man := New Gui("Columbus Manager")
 	man.Color(383838, 454545)
 	man.Add("Text", "w210 Center cWhite", "Visible items")
@@ -95,7 +94,6 @@ Manager() {
 	
 	ManagerClose:
 	Hotkey.Enable(Settings.Hotkeys.Main)
-	Hotkey.Enable(Settings.Hotkeys.Fokus)
 	Hotkey.Bind("WheelUp", "Hotkeys", Main.hwnd)
 	Hotkey.Bind("WheelDown", "Hotkeys", Main.hwnd)
 	man.Destroy(), man := ""

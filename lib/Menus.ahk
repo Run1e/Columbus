@@ -1,4 +1,6 @@
 MenuHandler(menu, item) {
+	if Plugin.Event("OnMenu", false, menu, item)
+		return
 	if (menu = "Tray") {
 		if (item = "Show Columbus")
 			Main.Toggle()
@@ -23,22 +25,26 @@ MenuHandler(menu, item) {
 		else
 			
 		if (item = "Report a bug") 
-			throw Exception("Not implemented")
-		else
-			
-		if (item = "Exit")
-			ExitApp
+			run https://github.com/Run1e/Columbus/issues/new
 		else
 			
 		if (item = "Show Commands") {
 			if !Main.IsVisible
 				Main.Show()
 			Main.SetText(Settings.Prefix)
+		} else
+			
+		if (item = "Exit") {
+			Plugin.Exit()
+			ObjRegisterActive(Plugin, "") ; revoke plugin object
+			xml.save(true)
+			ExitApp
 		}
 	} else if (menu = "Plugins") ; run plugin
 		Run("Plugins\" item ".ahk")
+	Plugin.Event("OnMenu", true, menu, item)
 }
 
 MenuHandler:
-MenuHandler(A_ThisMenu, A_ThisMenuitem)
+MenuHandler(A_ThisMenu, A_ThisMenuItem)
 return

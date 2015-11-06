@@ -4,7 +4,6 @@ Class MainGui extends Gui {
 			if Plugin.Event("OnShow", false, force)
 				return
 		this.IsVisible := true
-		Hotkey.Disable(Settings.Hotkeys.Fokus)
 		Gui % this.hwnd ": Show", Hide
 		DllCall("AnimateWindow", "UInt", this.hwnd, "Int", Settings.Fade, "UInt", "0xa0000")
 		this.Control("-Redraw", "Edit1")
@@ -19,7 +18,6 @@ Class MainGui extends Gui {
 			if Plugin.Event("OnHide", false, force)
 				return
 		this.IsVisible := false
-		Hotkey.Enable(Settings.Hotkeys.Fokus)
 		DllCall("AnimateWindow", "UInt", this.hwnd, "Int", Settings.Fade, "UInt", "0x90000")
 		Gui % this.hwnd ": Hide"
 		this.SetText()
@@ -50,7 +48,7 @@ Class MainGui extends Gui {
 				} else if xml.ea(node).hide {
 					MsgBox, 52, Columbus, % "'" name "' already exists but is hidden.`n`nDo you want to unhide it?"
 					ifMsgBox yes
-						node.RemoveAttribute("hide")
+						node.Removeute("hide")
 				} else {
 					m("'" name "' already exists in the list")
 					continue
@@ -71,7 +69,6 @@ Class MainGui extends Gui {
 		if Plugin.Event("OnResize", false)
 			return
 		Hotkey.Disable(Settings.Hotkeys.Main)
-		Hotkey.Disable(Settings.Hotkeys.Fokus)
 		Hotkey.Disable("~Ctrl Up")
 		Hotkey.Bind("Escape", "stopmove", Main.hwnd)
 		Main.Control("Hide", "SysListView321")
@@ -98,7 +95,6 @@ Class MainGui extends Gui {
 		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
 		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
 		Hotkey.Enable(Settings.Hotkeys.Main)
-		Hotkey.Enable(Settings.Hotkeys.Fokus)
 		Hotkey.Enable("~Ctrl Up")
 		Hotkey.Bind("Escape", "Hotkeys", Main.hwnd)
 		Plugin.Event("OnResize", true)

@@ -21,8 +21,8 @@ Submit() {  ;#[what if result is "No results!"?????]
 			LV_GetText(cmd, i), cmd := cmd.split(" - ")[1]
 		Main.SetText()
 		Commands[cmd](param*)
+		; Plugin.Event("OnCommand", cmd, param*)
 	}
 	
 	Plugin.Event("OnSubmit", true, text, input)
-	
 }
