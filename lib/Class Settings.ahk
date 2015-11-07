@@ -8,7 +8,7 @@ Class Settings {
 								, ScanTime:			5
 								, FreqSort:			true
 								, Verify:				false
-								, Prefix:				(A_ComputerName = "DARKNIGHT-PC" ? "." : "/")
+								, Prefix:				(A_ComputerName = "DARKNIGHT-PC" ? "." : "/") ; gonna love that punctuation mark, man
 								, UpdateExt: 			FileExt(A_ScriptFullPath)
 								, LastUpdatePrompt: 	0
 								, List:				"items"
@@ -16,6 +16,7 @@ Class Settings {
 								, Rows:				11
 								, RowSnap:			true
 								, LargeIcons:			true 
+								, RunAsAdmin:			true
 								, Font:				{Type:"Candara", Size:13, Bold:false}
 								, Color:				"3A3A3A"
 								, Pos:				{X:A_ScreenWidth-502-(task=3?pos.W:0), Y:A_ScreenHeight-357-(task=1?pos.H:0), Width:500, Height:355}}

@@ -46,7 +46,7 @@ Class Plugin {
 	
 	DeleteList(name) {
 		ItemList.Lists[name] := ""
-		xml.delete("lists/" name)
+		xml.delete("//lists/" name)
 	}
 	
 	; set a new list to the listview

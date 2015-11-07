@@ -16,14 +16,6 @@ OnExit, Exit
 "".base.startsWith := Func("String_StartsWith")
 "".base.endsWith := Func("String_EndsWith")
 
-if !A_IsAdmin {
-	if A_IsCompiled
-		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_ScriptFullPath, str, "" , str, A_WorkingDir, int, 1)
-	else	
-		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_AhkPath, str, """" . A_ScriptFullPath . """" . A_Space . "", str, A_WorkingDir, int, 1)
-	ExitApp
-}
-
 if !FileExist(A_ProgramFiles "\Columbus")
 	FileCreateDir % A_ProgramFiles "\Columbus"
 SetWorkingDir % A_ProgramFiles "\Columbus"
@@ -36,6 +28,15 @@ global version
 ;auto_version
 global xml := New xmlfile("Columbus", A_WorkingDir "\Columbus.xml")
 global Settings := New Settings()
+
+if !A_IsAdmin && Settings.RunAsAdmin {
+	if A_IsCompiled
+		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_ScriptFullPath, str, "" , str, A_WorkingDir, int, 1)
+	else	
+		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_AhkPath, str, """" . A_ScriptFullPath . """" . A_Space . "", str, A_WorkingDir, int, 1)
+	ExitApp
+}
+
 global Plugin := New Plugin("{436cf066-cf70-4ca9-990f-c7083fea8367}")
 global Main := New MainGui("Columbus")
 global Items := New Items("items")
@@ -43,8 +44,6 @@ global Hotkey := New Hotkey()
 global Commands := New CommandClass()
 global Notify := New Notify()
 global Tray := New Menu("Tray")
-
-Menu, Tray, NoStandard
 
 Tray.Add("Show Columbus")
 Tray.Add()
@@ -62,11 +61,9 @@ for a, b in xml.get("//plugins/plugin") {
 		int := New Menu("Plugins")
 	int.Add(b.name)
 }
-
-Tray.Add(int), int := ""
+Tray.Add(int), int:=""
 Tray.Add()
 Tray.Add("Exit")
-Menu, Tray, NoStandard
 Menu, Tray, Tip, Columbus v%version%
 Menu, Tray, Click, 2
 Tray.SetDefault("Show Columbus")
