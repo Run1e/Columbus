@@ -31,7 +31,7 @@ Class Notify {
 		
 		NotifyDestroy:
 		SetTimer, NotifyDestroy, off
-		Tray.Destroy()
+		Notify.Destroy()
 		return
 	}
 	
@@ -51,6 +51,6 @@ Class Notify {
 	}
 	
 	Click() {
-		Tray.Destroy()
+		Notify.Destroy()
 	}
 }
