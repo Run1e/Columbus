@@ -5,7 +5,7 @@ x := ComObjActive("Columbus")
 xml := x.get("xml")
 items := x.get("Items") ; class that extends from the ItemList class, it contains the main program list, we want to use the add() function
 
-FileSelectFolder, folder, C:\
+FileSelectFolder, folder
 
 if !folder
 	ExitApp
