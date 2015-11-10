@@ -153,10 +153,11 @@ Class Plugin {
 	
 	Event(event, param*) {
 		for a, b in this.Connections {
-			try {
-				if b[Event](param*)
-					x:=true
-			} catch e ; if an error occured we remove the plugin from the list
+			if IsObject(b)
+				try {
+					if b[Event](param*)
+						x:=true
+				} catch e ; if an error occured we remove the plugin from the list
 				this.Connections.Remove(a)
 		} return x
 	}

@@ -21,7 +21,7 @@ Fuzzy(input, arr){ ; magic happens here
 				if (h.MaxIndex() > n)
 					n := h.MaxIndex()
 			item := {   name:word
-					, score:n - input.length
+					, score:(n - input.length)*(1/log((ItemList.Lists[Settings.List].Freq[word])**3+9))
 					, contains:!!word.find(input)
 					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
 					, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}

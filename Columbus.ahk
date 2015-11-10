@@ -29,7 +29,7 @@ global version
 global xml := New xmlfile("Columbus", A_WorkingDir "\Columbus.xml")
 global Settings := New Settings()
 
-if !A_IsAdmin && Settings.RunAsAdmin {
+if !A_IsAdmin && (Settings.RunAsAdmin.length ? Settings.RunAsAdmin : true) {
 	if A_IsCompiled
 		DllCall("shell32\ShellExecute" . (A_IsUnicode ? "" :"A"), (A_PtrSize=8 ? ptr : uint), 0, str, "RunAs", str, A_ScriptFullPath, str, "" , str, A_WorkingDir, int, 1)
 	else	
@@ -45,6 +45,7 @@ global Commands := New CommandClass()
 global Notify := New Notify()
 global Tray := New Menu("Tray")
 
+Tray.NoStandard()
 Tray.Add("Show Columbus")
 Tray.Add()
 Tray.Add("Settings")
@@ -119,7 +120,7 @@ Main.Control("Hide", "Static1")
 Main.Options("-Caption +LastFound +ToolWindow -Resize +MinSize300x50 +OwnDialogs +Border -DPIScale +AlwaysOnTop")
 Main.SetEvents({Size:Main.Size.Bind(Main), DropFiles:Main.DropFiles.Bind(Main)})
 Main.SetDefault()
-LV_ModifyCol(2, 0)
+LV_ModifyCol(2, "0 Integer")
 
 ; parse registry for items
 Items.Search()

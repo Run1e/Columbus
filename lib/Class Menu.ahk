@@ -54,6 +54,14 @@ Class Menu {
 		Menu, % this.name, NoStandard
 	}
 	
+	NoDefault() {
+		Menu, % this.name, NoDefault
+	}
+	
+	NoStandard() {
+		Menu, % this.name, NoStandard
+	}
+	
 	SetDefault(item) {
 		this.default := item
 		Menu, % this.name, Default, % item
