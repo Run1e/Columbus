@@ -10,7 +10,7 @@ Submit() {  ;#[what if result is "No results!"?????]
 	if !input.startsWith(Settings.Prefix) {
 		Main.Hide(true)
 		if text {
-			;Run(xml.ea(xml.ssn("//lists/" Settings.List "/item[@name='" text "']")).run)
+			Run(xml.ea(xml.ssn("//lists/" Settings.List "/item[@name='" text "']")).run)
 			ItemList.Lists[Settings.List].AddFreq(text)
 		}
 	} else {
