@@ -27,7 +27,7 @@ EditAction(GuiEvent := "", EventInfo := "") {
 			return
 		}
 		
-		Main.SizeCol()
+		Main.SizeGui()
 		Loop % LV_GetCount()
 			LV_Modify(A_Index, "-Select")
 		if (input.length > 1) {

@@ -68,6 +68,8 @@ Class MainGui extends Gui {
 	Move() {
 		if Plugin.Event("OnResize", false)
 			return
+		this.Resizing := true
+		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
 		Hotkey.Disable(Settings.Hotkeys.Main)
 		Hotkey.Disable("~Ctrl Up")
 		Hotkey.Bind("Escape", "stopmove", Main.hwnd)
@@ -98,15 +100,18 @@ Class MainGui extends Gui {
 		Hotkey.Enable("~Ctrl Up")
 		Hotkey.Bind("Escape", "Hotkeys", Main.hwnd)
 		Plugin.Event("OnResize", true)
+		Main.Resizing := false
 		return
 	}
 	
-	Pos(x := "", y := "", w := "", h := "") {
+	Pos(x := "", y := "", w := "", h := "", save := true) {
 		Gui % this.hwnd ":Show", % (x.length ? "x" x : "") 
 							. (y.length ? " y" y : "") 
 							. (w.length ? " w" w : "") 
 							. (h.length ? " h" h : "")
 							. (this.IsVisible ? "" : " hide")
+		if !save
+			return
 		arr := []
 		if x.length
 			arr.X := x
@@ -155,9 +160,19 @@ Class MainGui extends Gui {
 	}
 	
 	; size the listview item width, part of Main.Size()
-	SizeCol() {
+	SizeGui() {
 		Main.SetDefault()
+		if this.Resizing
+			return
 		LV_ModifyCol(1, Settings.Pos.Width - (LV_GetCount() <= Settings.Rows ? 0 : 17))
+		if (LV_GetCount() < Settings.Rows) && Settings.Compress {
+			; -redraw
+			item_height := this.GetRowHeight(), this.Shrinked := true
+			Main.Pos(, Settings.Pos.Y + (Settings.Rows - LV_GetCount())*item_height,,Settings.Pos.Height - (Settings.Rows - LV_GetCount())*item_height, false)
+			; +redraw
+		} else if this.Shrinked
+			Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height, false), this.Shrinked := false
+		
 	}
 	
 	; size the controls to fit.
@@ -165,7 +180,7 @@ Class MainGui extends Gui {
 		this.Control("Move", "Edit1", "w" w " y" h - 25)
 		this.Control("Move", "SysListView321", "w" w " h" h - 25)
 		this.Control("Move", "Static1", "x" w / 2 - 102 " y" h / 2 - 21)
-		this.SizeCol()
+		this.SizeGui()
 	}
 	
 	; runs after ctrl has been released

@@ -19,6 +19,7 @@ Class Settings {
 								, RunAsAdmin:			true
 								, Font:				{Type:"Candara", Size:13, Bold:false}
 								, Color:				"3A3A3A"
+								, Compress:			true
 								, Pos:				{X:A_ScreenWidth-502-(task=3?pos.W:0), Y:A_ScreenHeight-357-(task=1?pos.H:0), Width:500, Height:355}}
 		{
 			if IsObject(b) {

@@ -1,7 +1,7 @@
 ; gui code by jNiZm! big thanks to him!
 Settings() {
 	static 
-	static set, pl
+	static set, pl, col
 	static men := []
 	static arrMenu := ["General", "Style", "Hotkeys", "Plugins"]
 	static texthwnd
@@ -14,6 +14,8 @@ Settings() {
 	set.SetEvents({Close:"SettingsClose", Escape:"SettingsClose"})
 	Hotkey.Disable(Settings.Hotkeys.Main)
 	Hotkey.Disable("~Ctrl Up")
+	
+	col := Settings.Color
 	
 	set.Margin(3, 3)
 	set.Color(0xF0F0F0)
@@ -52,14 +54,13 @@ Settings() {
 	set.Add("Text", "x135 y13", "Font:")
 	set.Add("DropDownList", "yp-3 x170", fonts)
 	set.Control("ChooseString", "ComboBox1", Settings.Font.Type)
-	set.Add("Text", "x135 yp+42", "Size:")
+	set.Add("Text", "x135 yp+35", "Size:")
 	set.Add("Edit", "x170 yp-3 w45")
 	set.Add("UpDown", "Range6-26", Settings.Font.Size)
-	set.Add("CheckBox", "x238 yp-6 Checked" Settings.LargeIcons, "Large Icons")
-	set.Add("CheckBox", "x238 yp+20 Checked" Settings.Font.Bold, "Bold")
-	set.Add("Button", "gSelectColor x135 y85", "Change GUI Color")
-	texthwnd := set.Add("Text", "yp+2 x260 0x200 h25 w75 Center", Settings.Color)
-	CtlColors.Attach(texthwnd, 0x454545, "0x000000", "0x000000")
+	set.Add("CheckBox", "x238 yp+5 Checked" Settings.LargeIcons, "Large icons")
+	set.Add("CheckBox", "x238 yp+20 Checked" Settings.Font.Bold, "Bold font")
+	set.Add("CheckBox", "x238 yp+20 Checked" Settings.Compress, "Compress")
+	set.Add("Button", "gSelectColor x135 y72 w90", "Change GUI Color")
 	
 	set.Tab(3)    ; Hotkey
 	set.Add("Groupbox", "x126 y-6 w220 h" height+11)
@@ -96,7 +97,6 @@ Settings() {
 		set.Control(, "Button10", Settings.default.LargeIcons)
 		set.Control(, "Button11", Settings.default.Font.Bold)
 		set.Control(, "Static14", Settings.default.Color)
-		CtlColors.Change(texthwnd, Settings.default.Color, "FFFFFF")
 	} else if (tab = 3) {
 		set.Control(, "msctls_hotkey321", Settings.default.Hotkeys.Main)
 		; set.Control(, "msctls_hotkey322", Settings.default.Hotkeys.Fokus)
@@ -112,7 +112,6 @@ Settings() {
 		WinActivate % set.ahkid
 		return
 	} WinActivate % set.ahkid
-	CtlColors.Change(texthwnd, col, "FFFFFF")
 	set.Control(, "Static14", col)
 	set.Enable()
 	return
@@ -161,7 +160,7 @@ Settings() {
 		xml.ssn("//plugins/plugin[@name='" text "']").SetAttribute("run", arr.HasKey(A_Index) ? true : false)
 	} arr:=[]
 	
-	col := set.GetText("Static14")
+	Settings.Color := col
 	
 	Settings.StartUp := set.ControlGet("Checked",, "Button4")
 	Settings.UpdateCheck := set.ControlGet("Checked",, "Button5")
@@ -171,6 +170,7 @@ Settings() {
 	
 	Settings.Font := {Type:set.GetText("ComboBox1"), Size:set.GetText("Edit1"), Bold:set.ControlGet("Checked",, "Button11")}
 	LargeIcons := set.ControlGet("Checked",, "Button10")
+	Settings.Compress := set.ControlGet("Checked",, "Button12")
 	
 	Settings.Hotkeys := {Main:MainHotkey}
 	
@@ -207,15 +207,14 @@ Settings() {
 		if (A_Index = 1)
 			pl := New Menu("Plugins"), add := true
 		pl.Add(b.name)
-	}
-	if add {
+	} if add {
 		Tray.Delete("Plugins")
 		Tray.Insert(Tray.Items.MaxIndex() - 1, pl)
-	}
-	CtlColors.Free()
+	} CtlColors.Free()
 	Hotkey.Bind(Settings.Hotkeys.Main, Main.Toggle.Bind(Main))
 	Hotkey.Enable("~Ctrl Up")
 	set.Destroy()
 	Main.Enable()
+	Main.SizeGui()
 	return
 }

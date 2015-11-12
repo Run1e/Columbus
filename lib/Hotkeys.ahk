@@ -39,7 +39,7 @@ Hotkeys(key) {
 				if (b.name = x)
 					ItemList.Lists[Settings.List].List.Remove(z)
 		LV_Modify(top > LV_GetCount() ? LV_GetCount() : top, "Select Vis") ; select the top row
-		Main.AltRows()
+		Main.SizeGui()
 	} else
 		
 	if (key = "^Z") && (Settings.List = "items") {
@@ -52,7 +52,7 @@ Hotkeys(key) {
 			ItemList.Lists[Settings.List].Show(b.name)
 			ItemList.Lists[Settings.List].List.InsertAt(b.pos + A_Index - 1, b.name)
 			LV_Modify(LV_Insert(b.pos + A_Index - 1, "Icon" ItemList.Lists[Settings.List].Icon[b.name], b.name), "Select Vis")
-		} Main.AltRows()
+		} Main.SizeGui()
 	} else
 		
 	/*

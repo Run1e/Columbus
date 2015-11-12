@@ -52,7 +52,7 @@ FuzzyWrap(input, arr) {
 		if ((Settings.List = "items") && Settings.FreqSort) || (ItemList.Lists[Settings.List].FreqSort = true)
 			LV_ModifyCol(2, "SortDesc")
 	} LV_Modify(1, "Select")
-	Main.SizeCol()
+	Main.SizeGui()
 	Main.Control("+Redraw", "SysListView321")
 }
 
