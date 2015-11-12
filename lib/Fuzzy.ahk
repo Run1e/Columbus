@@ -44,7 +44,12 @@ Fuzzy(input, arr){ ; magic happens here
 FuzzyWrap(input, arr) {
 	Main.Control("-Redraw", "SysListView321")
 	LV_Delete()
-	for a, b in Fuzzy(input, arr)
+	if !fuzzy_func {
+		if IsFunc("CustomFuzzy")
+			fuzzy_func := "CustomFuzzy"
+		else
+			fuzzy_func := "Fuzzy"
+	} for a, b in %fuzzy_func%(input, arr)
 		LV_Add("Icon" . ItemList.Lists[Settings.List].Icon[b.name], b.name, ItemList.Lists[Settings.List].Freq[b.name])
 	if !LV_GetCount()
 		LV_Add("Icon1", "No results!")

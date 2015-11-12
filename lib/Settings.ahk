@@ -96,7 +96,7 @@ Settings() {
 		set.Control(, "msctls_updown321", Settings.default.Font.Size)
 		set.Control(, "Button10", Settings.default.LargeIcons)
 		set.Control(, "Button11", Settings.default.Font.Bold)
-		set.Control(, "Static14", Settings.default.Color)
+		col := Settings.default.Color
 	} else if (tab = 3) {
 		set.Control(, "msctls_hotkey321", Settings.default.Hotkeys.Main)
 		; set.Control(, "msctls_hotkey322", Settings.default.Hotkeys.Fokus)
@@ -107,7 +107,6 @@ Settings() {
 	
 	SelectColor:
 	set.Disable()
-	ControlGetText, col, Static14, % set.ahkid
 	if !((col := ColorPicker(col)).length) {
 		WinActivate % set.ahkid
 		return
@@ -159,8 +158,6 @@ Settings() {
 		LV_GetText(text, A_Index)
 		xml.ssn("//plugins/plugin[@name='" text "']").SetAttribute("run", arr.HasKey(A_Index) ? true : false)
 	} arr:=[]
-	
-	Settings.Color := col
 	
 	Settings.StartUp := set.ControlGet("Checked",, "Button4")
 	Settings.UpdateCheck := set.ControlGet("Checked",, "Button5")

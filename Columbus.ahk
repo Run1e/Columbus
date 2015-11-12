@@ -221,3 +221,4 @@ return
 #Include lib\String.ahk
 #Include lib\Submit.ahk
 #Include lib\Update.ahk
+#Include *i CustomFuzzy.ahk

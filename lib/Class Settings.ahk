@@ -7,7 +7,7 @@ Class Settings {
 								, Debug: 				false
 								, ScanTime:			5
 								, FreqSort:			true
-								, Verify:				false
+								, Verify:				true
 								, Prefix:				(A_ComputerName = "DARKNIGHT-PC" ? "." : "/") ; gonna love that punctuation mark, man
 								, UpdateExt: 			FileExt(A_ScriptFullPath)
 								, LastUpdatePrompt: 	0
@@ -44,8 +44,8 @@ Class Settings {
 		else if (key = "List")
 			ItemList.Lists[value].Refresh(), Main.SetText()
 		else if (key = "Prefix") {
-			if (value.length > 1)
-				m("Prefix cannot be longer than 1 character.`n`nResetting Prefix to ""/"""), Settings.Prefix := "/"
+			if (value.length != 1)
+				m("Prefix too long or too short.`n`nResetting Prefix to ""/"""), Settings.Prefix := "/"
 		} else if (key = "Rows") {
 			if value > 0
 				Main.SetRows(value)
