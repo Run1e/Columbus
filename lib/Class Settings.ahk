@@ -51,6 +51,12 @@ Class Settings {
 				Main.SetRows(value)
 			else
 				m("Value invalid: " value "`nKey: " key)
+		} else if (key = "RunAsAdmin") {
+			MsgBox,52,Restart?,Do you want to restart Columbus because of the RunAsAdmin change?
+			ifMsgBox yes
+				reload
+		} else if (InStr(key, "Pos.") = 1) {
+			
 		}
 	}
 	

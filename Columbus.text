@@ -1,0 +1,133 @@
+0.940
+Requested by JoeSchmoe:
+- Fuzzy search function revamped
+Testing some redraw stuff for the Compress functionality
+0.939
+Added a new setting: Compress
+- Makes the gui smaller instead of showing blank listview lines (check Settings -> Style)
+A few minor changes
+Requested by JoeSchmoe:
+- Added the possibility to add a custom Fuzzy function
+0.938
+Fixed a bug:
+- The program wasn't launching programs (forgot to uncomment a line!)
+0.937
+Fixed a bug regarding the RunAsAdmin setting
+A few tweaks to the Fuzzy function
+0.936
+Suggested by JoeSchmoe:
+- Calculate the score using a logarithmic scale (unfinished)
+The list was not ordering the frequency counter properly
+0.935
+Reported by Elesar:
+- Notification gui was bugged
+0.934
+Requested by JoeSchmoe:
+- Added a RunAsAdmin setting
+0.933
+0.933:
+Fokus removed from software (will probably make a return as a plugin)
+Plugin list in Settings updates automatically
+Added commands: cmd/help (lists all commands)
+Tray items/menus can be added through plugins
+Many, many small improvements!
+0.932
+Item adding is randomized
+0.931
+Added default window placement support for all 4 taskbar positions
+0.930
+Added command: /repwin
+  - Moves the window to the top-left corner of the main screen
+Fixed a bug with default window placement
+0.929
+Minor changes to the code
+0.928
+Folder icons are now supported
+0.927
+Gui placement takes taskbar height into consideration
+0.926
+Fixed the verify functionality
+0.925
+Small behavioural changes in the plugin system
+Minor changes
+
+0.924
+Minor tweaks
+RunAsAdmin setting removed
+
+0.923
+Columbus was creating new XML files
+0.922
+RunAsAdmin setting added
+
+0.921
+Fixed a bug in the settings menu
+Other minor changes
+
+0.920
+Fixed update force behaviour
+Drag and drop for w10 fixed
+Edit item dialog bug fixed
+
+0.919
+The 'update' command now has a parameter to force an update
+
+
+0.918
+Highly improved the fuzzy algorithm for more complicated lists
+GuiDropFiles \"error\" fixed
+
+0.917
+Top item can be moved down in the Items class
+
+0.916
+Testing github upload from AHK Studio
+
+0.915
+Bug in fuzzy search function
+Minor changes
+0.914
+About window didn't close.
+0.913
+Fixed several bugs in the Fokus functionality
+Other small changes
+0.912
+Removed Critical from the Fuzzy() funciton. Messed something else up.
+0.911
+Few fixes/changes regarding the plugin system
+0.910
+Big implementations to the plugin system, still betaish
+-> lists can be created, modified and shown
+-> events can be listened to
+-> inbuilt functionality can be aborted and taken over by plugins
+-> other stuff
+Item verification re-implemented
+0.909
+Commands g and w re-implemented.
+Other various fixes
+0.908
+CTRL+Z wasn't adding the re-added items to the list
+0.907
+Lucida Console added to fonts list by request
+Ported Settings() to use the gui class (bugs are expected D:)
+0.906
+Fixed admin rights bug
+0.905
+Fixed a bug in the CTRL+Z logic
+0.904
+CTRL+Z re-implemented (history function)
+0.903
+Fixed icon missalignment after updating itemlist
+0.902
+Added Manager
+0.901
+Bugfixes
+0.9
+Few bugfixes in Fokus
+Added ini to xml converter for items
+Fokus (previously WindowSwitcher) re-implemented
+You can edit items (rightclick on item)
+Several new changes
+0.60
+- New ver
+

@@ -165,11 +165,13 @@ Class MainGui extends Gui {
 		if this.Resizing
 			return
 		LV_ModifyCol(1, Settings.Pos.Width - (LV_GetCount() <= Settings.Rows ? 0 : 17))
+		LV_ModifyCol(3, 0)
 		if (LV_GetCount() < Settings.Rows) && Settings.Compress {
-			; -redraw
+			SendMessage, 0x0B, FALSE,,, % Main.ahkid ; disable redraw? not tested too much  ;#[TESTING REDRAW]
 			item_height := this.GetRowHeight(), this.Shrinked := true
 			Main.Pos(, Settings.Pos.Y + (Settings.Rows - LV_GetCount())*item_height,,Settings.Pos.Height - (Settings.Rows - LV_GetCount())*item_height, false)
-			; +redraw
+			;SendMessage, 0x0B, TRUE,,, % Main.ahkid
+			
 		} else if this.Shrinked
 			Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height, false), this.Shrinked := false
 		

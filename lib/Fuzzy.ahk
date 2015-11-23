@@ -13,32 +13,37 @@ Fuzzy(input, arr){ ; magic happens here
 					continue 2
 				}
 		if (i = input.length) { ; all letters from input is in word
-			outline := ws[1]
+			outli := ws[1]
 			for x, v in ws
-				if v.equals(" ", ".")
-					outline .= ws[A_Index+1]
-			for g, h in m, n := ""
-				if (h.MaxIndex() > n)
-					n := h.MaxIndex()
-			item := {   name:word
-					, score:(n - input.length)*(1/log((ItemList.Lists[Settings.List].Freq[word])**3+9))
-					, contains:!!word.find(input)
-					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
-					, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}
+				if v.equals(" ", ".", "-")
+					outli .= ws[A_Index+1]
+			for g, h in m, n:="", c:=0, x:=0
+				for a, b in h
+					x += a, c++
+			
+			/*
+				if (word = "Counter-Strike: Global Offensive")
+					m(x, c)
+			*/
+			
+			contains:=!!word.find(input)
+			outline:=!!RegExReplace(word, "[^A-Z0-9]").find(input) || outli.find(input)
+			start:=(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")
+			score := 1/(x/c)*100*(contains?10:1)*(outline?10:1)*(start?10:1)*log((ItemList.Lists[Settings.List].Freq[word]*5)**4+10)
+			
+			; contains*input.length*5 + outline*input.length*20 + start*input.length*5 + 
+			item := {score:score, name:word}
 			if t.MaxIndex() {
 				for a, b in t, added:=false
-					if (b.score >= item.score) {
+					if (b.score <= item.score) {
 						t.InsertAt(A_Index, item), added:=true
 						break
 					}
 			} if !added
 				t.Insert(item)
 		}
-	} for n, p in (list:=t)[1] ; get all attribute names
-		for a, b in t, i:=0 ; loop the list for all items
-			if b[n] && n.equals("contains", "outline", "start") ; if the attribute is true and is either contains, outline or start then..
-				list.Remove(a), list.InsertAt(++i, b) ; remove it from the list and insert it at the top
-	return list
+	}
+	return t
 }
 
 FuzzyWrap(input, arr) {
@@ -50,7 +55,7 @@ FuzzyWrap(input, arr) {
 		else
 			fuzzy_func := "Fuzzy"
 	} for a, b in %fuzzy_func%(input, arr)
-		LV_Add("Icon" . ItemList.Lists[Settings.List].Icon[b.name], b.name, ItemList.Lists[Settings.List].Freq[b.name])
+		LV_Add("Icon" . ItemList.Lists[Settings.List].Icon[b.name], b.name, ItemList.Lists[Settings.List].Freq[b.name], b.score)
 	if !LV_GetCount()
 		LV_Add("Icon1", "No results!")
 	if !input.length {
@@ -94,4 +99,48 @@ FuzzyWrap(input, arr) {
 	GuiClose:
 	ExitApp
 	return
+	
+	Fuzzy(input, arr){ ; magic happens here
+		if !(input := RegExReplace(input, " ", "")).length { ; return the array if input is empty
+			for a, b in arr, list:=[]
+				list[a] := {name:b}
+			return list
+		} t:=[]
+		for index, word in arr { ; loop the array word for word
+			m:=[], i:=0, ws := word.split()
+			for z, a in input.split() ; split in the input
+				for v, b in ws
+					if (a = b) && !m[a, v] { ; figure out how many matching letters we have
+						m[a, v] := true, i++
+						continue 2
+					}
+			if (i = input.length) { ; all letters from input is in word
+				outline := ws[1]
+				for x, v in ws
+					if v.equals(" ", ".")
+						outline .= ws[A_Index+1]
+				for g, h in m, n := ""
+					if (h.MaxIndex() > n)
+						n := h.MaxIndex()
+				item := {   name:word
+					, score:(n - input.length)*(1/log((ItemList.Lists[Settings.List].Freq[word])**3+9))
+					, contains:!!word.find(input)
+					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
+					, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}
+				if t.MaxIndex() {
+					for a, b in t, added:=false
+						if (b.score >= item.score) {
+							t.InsertAt(A_Index, item), added:=true
+							break
+						}
+				} if !added
+					t.Insert(item)
+			}
+		} for n, p in (list:=t)[1] ; get all attribute names
+			for a, b in t, i:=0 ; loop the list for all items
+				if b[n] && n.equals("contains", "outline", "start") ; if the attribute is true and is either contains, outline or start then..
+					list.Remove(a), list.InsertAt(++i, b) ; remove it from the list and insert it at the top
+		return list
+	}
+	
 */
