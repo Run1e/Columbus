@@ -1,3 +1,8 @@
+0.941
+Reported by Acecool:
+- Settings and Manager GUIS could be opened twice and got buggy.
+- Changed some things in Fuzzy()
+- Minor changes
 0.940
 Requested by JoeSchmoe:
 - Fuzzy search function revamped

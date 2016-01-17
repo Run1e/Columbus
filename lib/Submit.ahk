@@ -1,6 +1,9 @@
 Submit() {  ;#[what if result is "No results!"?????]
 	Main.SetDefault()
 	
+	if !Main.IsVisible  ;*[ctrl+alt+p -> enter fix]
+		return
+	
 	input := Main.GetText()
 	LV_GetText(text, LV_GetNext())
 	

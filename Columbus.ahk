@@ -1,3 +1,15 @@
+/*
+	broken:
+	compress makes the gui go to shit on slower computers
+	removing and adding traymenus
+	update gui takes Focus
+	
+	to add:
+	plugin downloader
+	plugin manager
+	
+*/
+
 #SingleInstance force
 #MaxHotkeysPerInterval 200
 ; #notrayicon

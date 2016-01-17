@@ -13,40 +13,36 @@ Fuzzy(input, arr){ ; magic happens here
 					continue 2
 				}
 		if (i = input.length) { ; all letters from input is in word
-			outli := ws[1]
+			outline := ws[1]
 			for x, v in ws
-				if v.equals(" ", ".", "-")
-					outli .= ws[A_Index+1]
-			for g, h in m, n:="", c:=0, x:=0
-				for a, b in h
-					x += a, c++
-			
-			/*
-				if (word = "Counter-Strike: Global Offensive")
-					m(x, c)
-			*/
-			
-			contains:=!!word.find(input)
-			outline:=!!RegExReplace(word, "[^A-Z0-9]").find(input) || outli.find(input)
-			start:=(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")
-			score := 1/(x/c)*100*(contains?10:1)*(outline?10:1)*(start?10:1)*log((ItemList.Lists[Settings.List].Freq[word]*5)**4+10)
-			
-			; contains*input.length*5 + outline*input.length*20 + start*input.length*5 + 
-			item := {score:score, name:word}
+				if v.equals(" ", ".")
+					outline .= ws[A_Index+1]
+			for g, h in m, n := ""
+				if (h.MaxIndex() > n)
+					n := h.MaxIndex()
+			item := {   name:word
+					, score:(n - input.length)*(1/log((ItemList.Lists[Settings.List].Freq[word])**3+9))
+					, contains:!!word.find(input)
+					, outline:!!RegExReplace(word, "[^A-Z0-9]").find(input) || outline.find(input)
+					, start:(word.find(input) = 1) || (ws[word.find(input) - 1] = " ")}
 			if t.MaxIndex() {
 				for a, b in t, added:=false
-					if (b.score <= item.score) {
+					if (b.score >= item.score) {
 						t.InsertAt(A_Index, item), added:=true
 						break
 					}
 			} if !added
 				t.Insert(item)
 		}
-	}
-	return t
+	} for n, p in (list:=t)[1] ; get all attribute names
+		for a, b in t, i:=0 ; loop the list for all items
+			if b[n] && n.equals("contains", "outline", "start") ; if the attribute is true and is either contains, outline or start then..
+				list.Remove(a), list.InsertAt(++i, b) ; remove it from the list and insert it at the top
+	return list
 }
 
 FuzzyWrap(input, arr) {
+	static fuzzy_func
 	Main.Control("-Redraw", "SysListView321")
 	LV_Delete()
 	if !fuzzy_func {

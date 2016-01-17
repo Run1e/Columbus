@@ -1,6 +1,9 @@
 Manager() {
 	static man
-	Main.Hide(), Main.Disable()
+	if man.ahkid {
+		WinActivate % man.ahkid
+		return
+	} Main.Hide(), Main.Disable()
 	Hotkey.Disable(Settings.Hotkeys.Main)
 	man := New Gui("Columbus Manager")
 	man.Color(383838, 454545)

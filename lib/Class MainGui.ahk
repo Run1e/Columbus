@@ -3,9 +3,9 @@ Class MainGui extends Gui {
 		if !force
 			if Plugin.Event("OnShow", false, force)
 				return
-		this.IsVisible := true
 		Gui % this.hwnd ": Show", Hide
 		DllCall("AnimateWindow", "UInt", this.hwnd, "Int", Settings.Fade, "UInt", "0xa0000")
+		this.IsVisible := true
 		this.Control("-Redraw", "Edit1")
 		this.Control("+Redraw", "Edit1")
 		Gui % this.hwnd ": Show"
@@ -17,9 +17,9 @@ Class MainGui extends Gui {
 		if !force
 			if Plugin.Event("OnHide", false, force)
 				return
-		this.IsVisible := false
 		DllCall("AnimateWindow", "UInt", this.hwnd, "Int", Settings.Fade, "UInt", "0x90000")
 		Gui % this.hwnd ": Hide"
+		this.IsVisible := false
 		this.SetText()
 		Plugin.Event("OnHide", true)
 	}
@@ -93,7 +93,7 @@ Class MainGui extends Gui {
 			if Settings.RowSnap
 				Main.RowSnap(h)
 		} else ; failed :~)
-			Settings.Pos := Settings.default.Pos
+			Settings.Pos := Settings.default.Pos, m("Something failed when trying to save the new Gui position.")
 		Main.Pos(Settings.Pos.X, Settings.Pos.Y, Settings.Pos.Width, Settings.Pos.Height)
 		Main.Size(Settings.Pos.Width, Settings.Pos.Height)
 		Hotkey.Enable(Settings.Hotkeys.Main)
@@ -170,8 +170,9 @@ Class MainGui extends Gui {
 		if (LV_GetCount() < Settings.Rows) && Settings.Compress {
 			;PostMessage, 0x0B, FALSE,,, % Main.ahkid ; disable redraw? not tested too much  ;#[TESTING REDRAW]
 			item_height := this.GetRowHeight(), this.Shrinked := true
-			Main.Pos(, Settings.Pos.Y + (Settings.Rows - LV_GetCount())*item_height,,Settings.Pos.Height - (Settings.Rows - LV_GetCount())*item_height, false)
-			;PostMessage, 0x0B, TRUE,,, % Main.ahkid
+			Main.Pos(,,,Settings.Pos.Height - (Settings.Rows - LV_GetCount())*item_height, false)
+			Main.Pos(, Settings.Pos.Y + (Settings.Rows - LV_GetCount())*item_height,,, false)
+			;PostMessage, 0x0B, TRUE,,, % Main.ahki
 			;Gui % Main.hwnd ":Show"
 			
 		} else if this.Shrinked

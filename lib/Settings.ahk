@@ -9,7 +9,10 @@ Settings() {
 	static height := 120
 	static fonts := "Arial|Calibri|Cambria|Candara|Century Gothic|Comic Sans MS|Lucida Console|Consolas|Courier New|Georgia|Segoe UI|Tahoma|Terminal|Times New Roman|Verdana"
 	
-	Main.Hide(), Main.Disable()
+	if set.ahkid {
+		WinActivate % set.ahkid
+		return
+	} Main.Hide(), Main.Disable()
 	set := new Gui("Settings (" A_ComputerName ")")
 	set.SetEvents({Close:"SettingsClose", Escape:"SettingsClose"})
 	Hotkey.Disable(Settings.Hotkeys.Main)
@@ -210,7 +213,7 @@ Settings() {
 	} CtlColors.Free()
 	Hotkey.Bind(Settings.Hotkeys.Main, Main.Toggle.Bind(Main))
 	Hotkey.Enable("~Ctrl Up")
-	set.Destroy()
+	set.Destroy(), set:=""
 	Main.Enable()
 	Main.SizeGui()
 	return

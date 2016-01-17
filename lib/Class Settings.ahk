@@ -1,13 +1,12 @@
 Class Settings {
 	__New() {
-		task := GetTaskbarPos(pos := WinGetPos("ahk_class Shell_TrayWnd"))
 		for a, b in this.default := {   Hotkeys: 			{Main:"^!P"}
 								, StartUp: 			true
 								, UpdateCheck: 		true
 								, Debug: 				false
 								, ScanTime:			5
 								, FreqSort:			true
-								, Verify:				true
+								, Verify:				false
 								, Prefix:				(A_ComputerName = "DARKNIGHT-PC" ? "." : "/") ; gonna love that punctuation mark, man
 								, UpdateExt: 			FileExt(A_ScriptFullPath)
 								, LastUpdatePrompt: 	0
@@ -20,7 +19,7 @@ Class Settings {
 								, Font:				{Type:"Candara", Size:13, Bold:false}
 								, Color:				"3A3A3A"
 								, Compress:			true
-								, Pos:				{X:A_ScreenWidth-502-(task=3?pos.W:0), Y:A_ScreenHeight-357-(task=1?pos.H:0), Width:500, Height:355}}
+								, Pos:				this.getpos()}
 		{
 			if IsObject(b) {
 				for z, x in b
@@ -29,6 +28,15 @@ Class Settings {
 			} else if !xml.ssn("//settings/" a) ; if node doesn't exist, make it default
 				xml.add("settings/" a).text := b
 		}
+	}
+	
+	getpos(return := true) {
+		task := GetTaskbarPos(pos := WinGetPos("ahk_class Shell_TrayWnd"))
+		z := {X:A_ScreenWidth-502-(task=3?pos.W:0), Y:A_ScreenHeight-357-(task=1?pos.H:0), Width:500, Height:355}
+		if return
+			return z
+		else
+			this.default.Pos := z
 	}
 	
 	action(key, value) {
@@ -52,6 +60,8 @@ Class Settings {
 			else
 				m("Value invalid: " value "`nKey: " key)
 		} else if (key = "RunAsAdmin") {
+			if !value
+				m("WARNING: Some features of Columbus might not work with RunAsAdmin set to 0")
 			MsgBox,52,Restart?,Do you want to restart Columbus because of the RunAsAdmin change?
 			ifMsgBox yes
 				reload
